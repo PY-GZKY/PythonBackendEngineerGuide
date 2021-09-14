@@ -176,6 +176,10 @@ flush privileges;
 ### 暴露 `3306` 端口
 
 ```shell
+firewall-cmd --list-ports
+```
+
+```shell
 firewall-cmd --zone=public --add-port=3306/tcp --permanent
 firewall-cmd --reload
 ```
