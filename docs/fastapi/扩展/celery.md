@@ -1,4 +1,5 @@
 ## celery
+> [https://flower-docs-cn.readthedocs.io/zh](https://flower-docs-cn.readthedocs.io/zh/latest/config.html#id2)
 
 ```shell
 pip install celery（5.1.2） 
@@ -15,6 +16,10 @@ celery  -A celery_app.app beat -l info
 ```
 
 ## flower
+
+> [https://flower-docs-cn.readthedocs.io/zh](https://flower-docs-cn.readthedocs.io/zh/latest/config.html#id2)
+
+
 ```shell
 pip install flower 
 ```
