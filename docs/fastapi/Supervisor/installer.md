@@ -125,3 +125,50 @@ systemctl enable firewalld.service
 systemctl disable firewalld.service
 systemctl status firewalld
 ```
+
+#### 基本配置项说明
+
+```shell
+[unix_http_server]：这部分设置HTTP服务器监听的UNIX domain socket
+file: 指向UNIX domain socket，即file=/var/run/supervisor.sock
+chmod：启动时改变supervisor.sock的权限
+
+[inet_http_server]启动 supervisorctl 客户端后，可以用浏览器打开输入用户名、密码后，进入web界面
+port=127.0.0.1:9001 ; ip_address:port specifier, *:port for all iface
+username=root ; default is no username (open server)
+password=123 ; default is no password (open server)
+
+[supervisord]：与supervisord有关的全局配置需要在这部分设置
+logfile=/usr/local/var/log/supervisord.log ;日志文件，默认是 $CWD/supervisord.log
+logfile_maxbytes=50MB ;日志文件大小，超出会rotate，默认 50MB，如果设成0，表示不限制大小
+logfile_backups=10 ;日志文件保留备份数量默认10，设为0表示不备份
+loglevel=info ;日志级别，默认info，其它: debug,warn,trace
+pidfile=/usr/local/supervisor-3.3.4/supervisord.pid ;pid 文件
+nodaemon=false ;是否在前台启动，默认是false，即以 daemon 的方式启动
+minfds=1024 ;可以打开的文件描述符的最小值，默认 1024
+minprocs=200 ;可以打开的进程数的最小值，默认 200
+
+[supervisorctl]：
+serverurl：进入supervisord的URL， 对于UNIX domain sockets, 应设为 unix:///absolute/path/to/file.sock
+
+[include]：如果配置文件包含该部分，则该部分必须包含一个files键：
+files：包含一个或多个文件，这里包含了/etc/supervisor/conf.d/目录下所有的.conf文件，可以在该目录下增加我们自己的配置文件，在该配置文件中增加[program:x]部分，用来运行我们自己的程序，如下：
+
+子程序的相关配置
+[program:capital-balance] ：配置文件必须包括至少一个program，x是program名称，必须写上，不能为空
+directory = /Library/WebServer/Documents/project ;执行子进程时supervisord暂时切换到该目录
+command = /bin/bash -c ‘./yii 执行的命令’ ;包含一个命令，当这个program启动时执行
+autostart = true
+startsecs = 5
+autorestart = true
+startretries = 3;进程从STARING状态转换到RUNNING状态program所需要保持运行的时间（单位：秒）
+user = user
+process_name=%(program_name)s_%(process_num)002d ;当numprocs大于1是需要使用这个
+numprocs=2
+redirect_stderr = true;如果是true，则进程的stderr输出被发送回其stdout文件描述符上的supervisord
+stdout_logfile_backups = 20;要保存的stdout_logfile备份的数量
+stdout_logfile=/Library/WebServer/Documents/capital/backend/runtime/logs/supervisor/testPopQueue.log;将进程stdout输出到指定文件
+stdout_logfile_maxbytes=10MB;stdout_logfile指定日志文件最大字节数，默认为50MB，可以加KB、MB或GB等单位
+stderr_logfile=/Library/WebServer/Documents/capital/backend/runtime/logs/supervisor/testPopQueue-err.log
+stderr_logfile_maxbytes=10MB
+```
