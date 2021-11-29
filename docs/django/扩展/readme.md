@@ -1,0 +1,11 @@
+## django-model-utils
+## django-allauth
+## django-crispy-forms
+## django-mptt
+## django-contrib-comments
+## django-imagekit
+## django-brace
+## django-notifications-hq
+## django-simple-captcha
+## django-anymail
+## django-activity-stream
