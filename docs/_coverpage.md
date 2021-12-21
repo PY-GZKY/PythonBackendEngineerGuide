@@ -1,5 +1,3 @@
-[comment]: <> (![logo]&#40;./fastapi/设计模式/images/fastapi.png&#41;)
-
 ## `Django` | `Fastapi`
 
 本文档是作者从事 Python web 开发以来的一些历程
