@@ -14,4 +14,4 @@
 ![Forks](https://img.shields.io/badge/Forks-1.7k-blue)
 
 [GitHub](https://github.com/py-gzky)
-[Get Started](README.md)
+[开始阅读](README.md)
