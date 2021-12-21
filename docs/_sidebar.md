@@ -23,11 +23,14 @@
   * 扩展
     * [Apscheduler](fastapi/扩展/Apscheduler.md)
     * [Fastapi-utils](fastapi/扩展/fastapi-utils.md)
+    * [Celery](fastapi/扩展/celery.md)
+    * [Arq](fastapi/扩展/arq.md)
     
   * [部署 fastapi](fastapi/部署/fastapi.md)
   
 * [Django](django/readme.md)
   * [扩展](django/扩展/readme.md)
+    * [关于跨域](django/扩展/关于跨域.md)
   * [部署](django/部署/readme.md)
 
 * Git
