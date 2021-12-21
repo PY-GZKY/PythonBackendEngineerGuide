@@ -1,4 +1,4 @@
-![logo](./fastapi/设计模式/images/fastapi.png)
+[comment]: <> (![logo]&#40;./fastapi/设计模式/images/fastapi.png&#41;)
 
 ## `Django` | `Fastapi` 
 
