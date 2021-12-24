@@ -1,4 +1,5 @@
 
-[comment]: <> (* [首页]&#40;/&#41;)
-[comment]: <> (* [Me]&#40;resume/index.html&#41;)
-[comment]: <> (* [:cn:]&#40;/zh-cn/&#41;)
+* [博客文章](https://blog.tplan.cc)
+* [自动化办公](https://python-automation.docs.tplan.cc)
+* [T计划](http://demo.tplan.cc)
+* [作者](https://resume.tplan.cc)

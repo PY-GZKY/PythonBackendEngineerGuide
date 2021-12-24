@@ -33,9 +33,8 @@
     * [关于跨域](django/扩展/关于跨域.md)
   * [部署](django/部署/readme.md)
 
-* Git
-  * [Git避坑](git_/readme.md)
+* [Git](git_/readme.md)
   * [Github搜索指南](git_/search.md)
 
-* 杂谈
-  * [关于命名](杂谈/readme.md)
+
+* [杂谈](杂谈/readme.md)
