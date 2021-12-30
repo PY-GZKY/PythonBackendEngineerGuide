@@ -26,6 +26,8 @@
     * [Celery](fastapi/扩展/celery.md)
     * [Arq](fastapi/扩展/arq.md)
     
+  * [撸一个摸鱼办](fastapi/撸一个摸鱼办/readme.md)
+    
   * [部署 fastapi](fastapi/部署/fastapi.md)
   
 * [Django](django/readme.md)
