@@ -129,6 +129,14 @@ daemonize = ./uwsgi.log
 uwsgi --ini uwsgi.ini
 ```
 
+### `uwsgi` 重启、停止
+
+```shell：
+uwsgi --reload uwsgi.pid
+uwsgi --stop uwsgi.pid
+```
+
+
 查看进程，发现启动成功:
 ```shell
 [root@gzky_gz conf]# ps -ef | grep uwsgi
