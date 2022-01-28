@@ -86,6 +86,12 @@ $ tree
 ```shell
 [uwsgi]
 
+# 对外提供 http 服务的端口
+http = :8000
+
+#the local unix socket file than commnuincate to Nginx 用于和 nginx 进行数据交互的端口
+socket = 127.0.0.1:8001
+
 # 项目目录
 chdir = /HelloWorld
 
@@ -101,6 +107,16 @@ master = true
 
 # 进程个数
 workers = 4
+
+# # 进程个数 maximum number of worker processes
+#processes = 100
+
+#thread numbers startched in each worker process
+threads = 10
+
+#monitor uwsgi status 通过该端口可以监控 uwsgi 的负载情况
+stats = 127.0.0.1:9000
+
 pidfile = ./uwsgi.pid
 
 # 自动移除unix Socket和pid文件当服务停止的时候
