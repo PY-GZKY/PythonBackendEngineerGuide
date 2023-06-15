@@ -253,8 +253,7 @@ deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main con
 
 # 更新源
 RUN apt-get update
-# 安装必要的依赖项
-RUN apt-get install python3-dev default-libmysqlclient-dev -y
+
 # 新建和指定工程目录为 code
 RUN mkdir /code
 WORKDIR /code
