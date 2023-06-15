@@ -92,11 +92,7 @@ root  3180    1   0 4月03 ?        00:00:00 /root/anaconda3/bin/python /root/an
 root  3855  6709  0 11:27 pts/1    00:00:00 grep --color=auto 8006
 ```
 
-> 一切正常 ！！
-
-
-
-`--port` 参数对外开放了 `8080` 端口，通过 `http://IP:8080` 访问目标主机可以看到服务已经正常启动 ！！
+`--port` 参数对外开放了 `8080` 端口，通过 `http://IP:8080` 访问目标主机可以看到服务已经正常启。
 
 `nohup` 会将所有的 `print`、 `log` 、`debug` 输出的信息汇总到`./output.log` 文件，大概是这样的:
 ```bash
@@ -134,11 +130,12 @@ root  3855  6709  0 11:27 pts/1    00:00:00 grep --color=auto 8006
 {'status_code': 200, 'message': '获取状态成功', 'data': 1}
 INFO:     113.66.254.2:54315 - "POST /api/v1/erp3c_delivery_16h/1f11b32dec39262e84df HTTP/1.1" 200 OK
 ```
-> 至此，Uvicorn 部署完毕
 
 ## `Uvicorn` + `Nginx`
+
 如果是`单机/单服务器`应用的话，通过上面的部署之后项目已经完美启动。
-但是人们总是热衷于使用 `Nginx` 来反向代理我们的`web 服务`，`Nginx` 似乎能够让我们的网站更像一个网站 ！！
+
+但是我们总是热衷于使用 `Nginx` 来反向代理我们的`web 服务`，`Nginx` 似乎能够让我们的网站更像一个网站 ！！
 
 更重要的方面是 `Nginx` 确实是一款高效实用的`反向代理服务器`，安装简单，配置容易，支持负载均衡，确为线上部署的一把利器，受到广泛开发者的青睐也在情理之中了。
 
@@ -146,12 +143,12 @@ INFO:     113.66.254.2:54315 - "POST /api/v1/erp3c_delivery_16h/1f11b32dec39262e
 
 `Nginx` 的可配置项非常多，我们这里不做过多的详述，毕竟篇幅不小。
 
-通过 [安装依赖](initialization/installer.md) 这一章，我们已经成功搭建并启动了 `Nginx` 反向代理服务器，如果未启动则通过文档中的命令重启即可！！
+这里假设已经成功搭建并启动了 `Nginx` 反向代理服务器，如果未启动则通过文档中的命令重启即可！！
 
+查看 `Nginx` 安装的所在目录：
 
-查看 `Nginx` 安装的所在目录
 ```shell
-[root@gzky_gz ~] whereis nginx
+[root@~] whereis nginx
 nginx: /usr/local/nginx
 ```
 
@@ -178,12 +175,12 @@ server {
 }
 ```
 
-推出并保存 ！！
 这样 `Nginx` 将监听 `:8080 `端口服务并转发到宿主机的` 80` 端口上，如果是`前后端分离`项目则不做 `location /static/` 配置，只提供 `api` 接口服务即可。
 
 否则则要声明项目的静态文件目录，比如你使用的是 Vue 编写的前端项目，那么需要将打包好的前端项目放于 `location /static/` 之内，通过直接访问 `Vue`页面，再由`Vue`调用我们的后端接口
 
 验证 `Nginx` 配置文件是否异常:
+
 ```shell
 [root@gzky_gz conf] /usr/local/nginx/sbin/nginx  -t
 nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok
@@ -191,17 +188,13 @@ nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
 ```
 出现以上信息则说明配置文件无误，否则根据报错行数修正配置文件即可 ！！
 
-> 只要确保 `:8080` 服务正常和`Nginx 配置`文件无异常，项目将顺利启动 ！！
+> 只要确保 `:8080` 服务正常和`Nginx 配置`文件无异常，项目将顺利启动。
 
-
-通过 `http://IP `地址访问项目根路径，打开控制台发现由 `Nginx` 提供服务
+通过 `http://IP `地址访问项目根路径，打开控制台发现由 `Nginx` 提供服务。
 
 ![](images/Nginx.png)
 
-
 需要注意的是如果我们使用 `https://IP ` 访问项目会出现 `无法访问此网站` 的情况，原因是我们并没有做 https 配置和重定向，这需要一些 ssl 证书的支持，这个不做详述。
-
-> 至此，一个简单的 `Uvicorn` +` Nginx` 组合部署完毕 ！！
 
 ## `Uvicorn` + `Nginx` + `Docker`
 
@@ -214,11 +207,13 @@ nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
 假设我们的工程目录 `code`，请在 `code` 下:
 
 ### 生成 `requirements.txt` 文件
+
 ```shell
 pip freeze > requirements.txt
 ```
 
 ### `Nginx` 配置文件
+
 在 `code/config/nginx` 下新建 `web_app.conf` 文件并写入以下配置
 ```shell
 upstream app {
@@ -331,15 +326,13 @@ Docker-compose up
 ```
 
 此命令会顺序执行:
+
 - 编译 `Dockerfile` 文件，会在`docker`安装 `Python3.8` 镜像 以及`requirements.txt`中的所有库
 - 安装 `Nginx` 最新版本并同步挂载`./config/nginx` 目录到 容器中的 `/etc/nginx/conf.d` 目录，也就是修改其配置文件了
 - 启动`web服务`暴露 `:8080`，这里没使用`ports` 端口映射是因为我们只是把`8080`端口转发给 `Nginx` 而已，而不是对外开放
 - 启动 `Nginx`，注意是要对外暴露 `80` 端口，所以使用 `ports` 关键字
 
-
 容器启动成功后，通过 `http://IP` 地址访问项目，实际效果和本地宿主机部署一样。
-
-> 至此，`Uvicorn` + `Nginx` + `Docker` 部署成功 !!
 
 ## `FastAPI` +  `Vue` + `Nginx` + `Docker`
 
@@ -360,7 +353,8 @@ Docker-compose up
 `Vue` 在项目中设置了诸如 `api.js` 的文件用于存放后端`api` 接口 亦或是像我一个优秀的前端同事一样直接在每个`Vue`页面编写复杂的`Ajax` 交互，
 总言之就是要准确配置和调用后端接口。
 
-如果你没有做一些额外的特殊的设置的话:
+如果你没有做一些额外的特殊的设置的话：
+
 ```shell
 npm run build
 ```
@@ -385,9 +379,8 @@ server {
 
 
 ### 部署多个`Vue`项目
+
 虽然一个`Nginx`也能够部署多个 `Vue`项目，但是我还是不建议这样的做法，一旦`Vue`项目体量过大，调度的接口过多，则会发生性能不足的情况。
 可以使用搭建多个`Nginx` 服务器来挂载多个`Vue`项目(或其他前端项目)，一个`Nginx`对应一个`Vue`项目。
-而理论上，只要我们的机器的`cpu`和`内存`足够，可以搭建很多很多的`Nginx`，只需改变其默认端口即可 ！！
-
-> `Docker` 部署请参照上方 `code` 工程
+而理论上，只要我们的机器的`cpu`和`内存`足够，可以搭建很多很多的`Nginx`，只需改变其默认端口即可。
 
