@@ -8,8 +8,8 @@
 
 [//]: # (    * [prometheus]&#40;fastapi/DevOps/prometheus.md&#41;)
     
-  * [Docker](fastapi/Docker/readme.md)
-    * [常用指令](fastapi/Docker/常用指令.md)
+* [Docker](fastapi/Docker/readme.md)
+  * [常用指令](fastapi/Docker/常用指令.md)
     
 [//]: # (  * [Supervisor]&#40;fastapi/Supervisor/installer.md&#41;)
 
@@ -19,13 +19,13 @@
 
 [//]: # (    * [脚手架]&#40;fastapi/Design/fastapi脚手架.md&#41;)
     
-  * 扩展
-    * [Apscheduler](fastapi/Extend/Apscheduler.md)
-    * [Fastapi-utils](fastapi/Extend/fastapi-utils.md)
-    * [Celery](fastapi/Extend/celery.md)
-    * [Arq](fastapi/Extend/arq.md)
+* 扩展
+  * [Apscheduler](fastapi/Extend/Apscheduler.md)
+  * [Fastapi-utils](fastapi/Extend/fastapi-utils.md)
+  * [Celery](fastapi/Extend/celery.md)
+  * [Arq](fastapi/Extend/arq.md)
 
-  * [部署](fastapi/Deploy/fastapi.md)
+* [部署](fastapi/Deploy/fastapi.md)
 
 
 
