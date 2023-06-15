@@ -1,4 +1,4 @@
-## Fastapi实战文档
+## Fastapi Docs
 
 ![Python](https://img.shields.io/badge/Python-3.9+-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-green)
