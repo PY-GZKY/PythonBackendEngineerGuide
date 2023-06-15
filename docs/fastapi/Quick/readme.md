@@ -56,11 +56,18 @@ if __name__ == "__main__":
 
 ## `Swagger UI`
 
-`FastApi` 提供了优美的 `Swagger` 交互式文档。
+FastAPI 提供了内置的 Swagger UI 文档生成器，使得生成和查看交互式 API 文档变得非常简单。
+
+Swagger 是一个用于描述和可视化 RESTful API 的开源框架，它可以帮助开发人员和用户更好地理解和使用 API。
+
+当使用 FastAPI 构建 API 时，它会自动根据代码中的注释和类型提示生成 Swagger 文档。通过访问 API 的根端点（例如，http://localhost:8000/docs），您可以在浏览器中查看交互式的 Swagger UI 文档。这个文档包含了 API 的端点、请求方法、请求参数、响应示例等详细信息，使得用户可以方便地测试和理解 API 的功能和使用方式。
+
+FastAPI 的 Swagger UI 文档不仅提供了清晰的接口描述，还支持请求参数的自动验证、响应模型的展示、请求示例的生成等功能，使得与 API 的交互更加方便和直观。
+
+总的来说，FastAPI 的 Swagger UI 文档生成器是一个强大且实用的工具，可以帮助开发人员更好地展示和共享他们构建的 API。
 
 在 `Java` 或者 `Go` 中我们可能需要通过注解来构建 `Swagger API`文档，但是在这里你完全不用担心这一步。
 
 
-
-
+![](./images/ui.png)
 
