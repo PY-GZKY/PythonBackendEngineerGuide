@@ -1,13 +1,3 @@
-:star2: :star2:  :star2:  :star2:  :star2:  :star2:  :star2:  :star2:  :star2:  :star2:  :star2:  :star2:  :star2:  :star2:  :star2:  :star2: :wave: :wave: :wave:
-
-> 开始部署 `fastapi` 服务，很开心来到了这一步，撒花 :wave: :wave: :wave:
-
-
-![Python](https://img.shields.io/badge/Python-3.8+-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.5.9-brightgreen)
-![Nginx](https://img.shields.io/badge/Nginx-1.16.1-red)
-![Mysql](https://img.shields.io/badge/Mysql-5.7-blue)
-
 
 ## `Uvicron`
 
