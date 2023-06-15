@@ -1,8 +1,3 @@
-* [快速初始化](initialization/readme.md)
-  * [安装一些服务](initialization/installer.md)
-  * [开始一些配置](initialization/config.md)
-  * [谈一谈 Python Web 框架](initialization/web框架.md)
-  
 * [FastAPI](fastapi/readme.md)
   * [快速开始](fastapi/快速开始/readme.md)
   * [Starlette](fastapi/Starlette/readme.md)
@@ -29,14 +24,7 @@
   * [撸一个摸鱼办](fastapi/撸一个摸鱼办/readme.md)
     
   * [部署 fastapi](fastapi/部署/fastapi.md)
+
+
+
   
-* [Django](django/readme.md)
-  * [扩展](django/扩展/readme.md)
-    * [关于跨域](django/扩展/关于跨域.md)
-  * [部署](django/部署/readme.md)
-
-* [Git](git_/readme.md)
-  * [Github搜索指南](git_/search.md)
-
-
-* [杂谈](杂谈/readme.md)
