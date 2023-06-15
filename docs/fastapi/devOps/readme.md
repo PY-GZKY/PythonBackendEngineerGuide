@@ -32,7 +32,7 @@ nohup /opt/node_exporter/node_exporter &
 [root@mysql01 ~]# netstat -lnptu | grep 9100
 tcp6       0      0 :::9100                 :::*                    LISTEN      20716/node_exporter 
 
-扩展: nohup命令: 如果把启动node_exporter的终端给关闭,那么进程也会
+Extend: nohup命令: 如果把启动node_exporter的终端给关闭,那么进程也会
 随之关闭。nohup命令会帮你解决这个问题。
 ```
 ### mysqld_exporter
