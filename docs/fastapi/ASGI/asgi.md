@@ -1,12 +1,14 @@
 
-> `ASGI`（异步服务器网关接口）是`WSGI`的精神继承者，旨在在具有异步功能的`Python` `Web`服务器，框架和应用程序之间提供标准接口。
+ `ASGI`（异步服务器网关接口）是`WSGI`的精神继承者，旨在在具有异步功能的`Python` `Web`服务器，框架和应用程序之间提供标准接口。
 
 ### `ASGI` 服务器
+
 - `uvicorn`
 - `Hypercorn`
 - `Daphne`
 
 ### `ASGI` 框架
+
 - `Starlette`
 - `FastAPI`
 - `Quart`：`Quart` 是一个类似于 `Flask` 的 `ASGI Web` 框架。
@@ -16,6 +18,7 @@
 - `Django3.x`
 
 ### 异步库
+
 - `TypeSystem`：数据验证和表单渲染
 - `Databases`：异步数据库。
 - `ORM`：同时支持同步和异步的`ORM`。
@@ -30,6 +33,7 @@
 - 一个应用程序，驻留在协议服务器中，每个连接中实例化一次，并在事件消息发生时对其进行处理。
 
 实际上，这就是`ASGI`应用程序的全部特性– 可调用的。同样，此可调用对象的形式由`ASGI`规范定义。格式如下：
+
 ```python
 async def app(scope, receive, send):
     assert scope['type'] == 'http'
@@ -39,14 +43,12 @@ async def app(scope, receive, send):
 解释一下三个参数：
 
 - `scope`是一个字典，其中包含有关传入请求的信息。这是一个上下文环境。其数据与`HTTP`和`WebSocket`连接间的数据有所不同。
-
 - `receive`是用于接收`ASGI`事件消息的异步函数。
-
 - `send` 是用于发送`ASGI`事件消息的异步函数。
 
+> `uvicorn`: [https://github.com/encode/uvicorn](https://github.com/encode/uvicorn)   
 
-
-> `uvicorn`: [https://github.com/encode/uvicorn](https://github.com/encode/uvicorn)    `uvicorn.org`: [https://www.uvicorn.org/](https://www.uvicorn.org/)
+> `uvicorn.org`: [https://www.uvicorn.org/](https://www.uvicorn.org/)
 
 
 > Uvicorn currently supports HTTP/1.1 and WebSockets. Support for HTTP/2 is planned. 暂时不支持 Http2.0
