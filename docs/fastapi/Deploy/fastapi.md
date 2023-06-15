@@ -363,6 +363,7 @@ npm run build
 而至于`fastapi`的后端接口则可以存在于任何一台有`公网ip`的机器，前端项目只需要改动`ip` 即可。
 
 ### `Nginx`部署`Vue`项目
+
 在 `nginx.conf`中编辑以下配置
 ```shell
 server {
