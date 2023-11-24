@@ -1,5 +1,5 @@
 
-## `Uvicron`
+# `Uvicron`
 
 `fastapi` 官方推荐使用 `uvicron` 服务器来部署其服务
 
@@ -98,34 +98,6 @@ root  3855  6709  0 11:27 pts/1    00:00:00 grep --color=auto 8006
 ```bash
 2021-04-08 09:00:06.622 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
 2021-04-08 09:00:06.639 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.661 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.680 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.696 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.713 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.728 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.743 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.759 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.776 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.798 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.819 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.846 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.872 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.892 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.908 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.928 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.952 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.968 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:06.992 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:07.017 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:07.035 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:07.049 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:07.068 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:07.085 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:07.103 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:07.122 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:07.140 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:07.161 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
-2021-04-08 09:00:07.178 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
 2021-04-08 09:00:07.198 | DEBUG    | app.api.api_v1.spider_m.erp3c_delivery_out.erp_delivery_16h:crawl:252 - [+]  更新成功 ..... done
 {'status_code': 200, 'message': '获取状态成功', 'data': 1}
 INFO:     113.66.254.2:54315 - "POST /api/v1/erp3c_delivery_16h/1f11b32dec39262e84df HTTP/1.1" 200 OK

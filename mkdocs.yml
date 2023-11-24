@@ -1,0 +1,69 @@
+site_name: Python后端工程师生存指南
+site_description: Python后端工程师生存指南
+site_author: 梧桐
+copyright: 梧桐
+#site_url: https://dl.ypw.io
+repo_url: https://github.com/py-gzky/fastapi-docs
+repo_name: py-gzky/fastapi-docs
+remote_name: https://github.com/py-gzky/fastapi-docs
+remote_branch: site
+
+theme:
+  name: 'material'
+  features:
+    - content.code.annotate
+    - content.tabs.link
+    - navigation.indexes
+    - navigation.instant
+    - navigation.sections
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - navigation.tracking
+    - search.highlight
+    - search.share
+    - search.suggest
+  language: 'zh'
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off
+        name: 打开深色模式
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-outline
+        name: 关闭深色模式
+
+extra:
+  search:
+  analytics:
+    provider: google
+    property: 'UA-111276663-2'
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - pymdownx.inlinehilite
+  - pymdownx.critic
+  - toc:
+      permalink: false
+
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/sorts/tablesort.number.min.js
+
+nav:
+  - 首页:
+      - 首页: README.md
+
+  - 服务器配置:
+      - 如何搭建一台后端服务器: how-to-configure-fastapi-server.md
+
+  - FastAPI框架:
+      - 如何快速开发 FastAPI 应用: how-to-quickly-develop-fastapi-application.md
+      - 如何快速部署 FastAPI 服务: how-to-deploy-fastapi-services.md
+      - 如何为 FastAPI 集成插件: how-to-integrate-plugins.md

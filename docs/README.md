@@ -1,35 +1,9 @@
-### `Fastapi`
-
-无论是从技术选型、设计模式、编码风格、以及应用部署方面，如果你正从事 Python 开发相关的工作，那么此文档很可能对你有所帮助。
-
-笔者将尽自己所能，把平时的工作经验以及所思所想毫无保留的分享至此，希望能对你有帮助！！
-
-### 项目环境依赖于
-
-![Python](https://img.shields.io/badge/Python-3.9+-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-green)
-
-### 关于作者
-
-> 目前坐标广州，从事 Python 爬虫/后端开发 多年。
-
-### 联系作者
-
-- 如果你有任何关于此文档的问题或者`Python web`相关的疑问，请添加作者微信。
-
-![作者微信](author/作者微信.jpg "=100x100")
-
-### 转载须知
-
-- 转载时须标注转载来源: `文档`+`作者`
-- 笔者在文档记录过程中会从多方借鉴优质文章和项目，如有冒犯或侵权，请联系作者。
-
-### 参与贡献
-
-- 如果您对本项目有任何建议或发现文中内容有误的，欢迎提交 `issues` 进行指正。
-- 对于文中我没有涉及到知识点，欢迎提交 `PR`。
+# *Python* 后端工程师生存指南
 
 
-##### 请作者喝杯咖啡
+ ![Size](https://img.shields.io/github/repo-size/ypwhs/dl-engineer-guidebook.svg)  ![Stars](https://img.shields.io/github/stars/ypwhs/dl-engineer-guidebook.svg)
 
-![请作者喝杯咖啡](author/作者微信.jpg "=100x100")
+在线阅读：[https://dl.ypw.io](https://dl.ypw.io)  
+在线阅读：[https://ypwhs.github.io/dl-engineer-guidebook/](https://ypwhs.github.io/dl-engineer-guidebook/)  
+项目地址：[https://github.com/ypwhs/dl-engineer-guidebook](https://github.com/ypwhs/dl-engineer-guidebook) 
+

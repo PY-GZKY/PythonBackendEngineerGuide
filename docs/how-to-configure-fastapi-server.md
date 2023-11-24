@@ -1,3 +1,4 @@
+# 如何搭建一台后端服务器
 
 > https://fastapi.tiangolo.com
 
@@ -68,6 +69,4 @@ FastAPI 的 Swagger UI 文档不仅提供了清晰的接口描述，还支持请
 
 在 `Java` 或者 `Go` 中我们可能需要通过注解来构建 `Swagger API`文档，但是在这里你完全不用担心这一步。
 
-
-![](./images/ui.png)
 
