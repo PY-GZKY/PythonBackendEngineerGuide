@@ -2,7 +2,7 @@ site_name: Python后端工程师生存指南
 site_description: Python后端工程师生存指南
 site_author: 梧桐
 copyright: 梧桐
-#site_url: https://dl.ypw.io
+site_url: https://fastapi.tplan.cc
 repo_url: https://github.com/py-gzky/fastapi-docs
 repo_name: py-gzky/fastapi-docs
 remote_name: https://github.com/py-gzky/fastapi-docs
