@@ -1,5 +1,4 @@
-
-# `Uvicron`
+# 如何快速部署 `FastAPI` 服务
 
 `fastapi` 官方推荐使用 `uvicron` 服务器来部署其服务
 

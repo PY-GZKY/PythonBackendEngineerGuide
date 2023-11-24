@@ -1,10 +1,11 @@
-# FastAPI 后端框架
+# `FastAPI` 框架
 
- ![Size](https://img.shields.io/github/repo-size/ypwhs/dl-engineer-guidebook.svg)  ![Stars](https://img.shields.io/github/stars/ypwhs/dl-engineer-guidebook.svg)
+![Python](https://img.shields.io/badge/Python-3.9+-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-latest-green)
 
-在线阅读：[https://dl.ypw.io](https://dl.ypw.io)  
-在线阅读：[https://ypwhs.github.io/dl-engineer-guidebook/](https://ypwhs.github.io/dl-engineer-guidebook/)  
-项目地址：[https://github.com/ypwhs/dl-engineer-guidebook](https://github.com/ypwhs/dl-engineer-guidebook) 
+在线阅读：[https://fastapi.tplan.cc](https://fastapi.tplan.cc)  
+在线阅读：[https://py-gzky.github.io/PythonBackendEngineerGuide/](https://py-gzky.github.io/PythonBackendEngineerGuide/)  
+项目地址：[https://github.com/PY-GZKY/PythonBackendEngineerGuide](https://github.com/PY-GZKY/PythonBackendEngineerGuide)
 
 ![logo](https://camo.githubusercontent.com/86d9ca3437f5034da052cf0fd398299292aab0e4479b58c20f2fc37dd8ccbe05/68747470733a2f2f666173746170692e7469616e676f6c6f2e636f6d2f696d672f6c6f676f2d6d617267696e2f6c6f676f2d7465616c2e706e67)
 
