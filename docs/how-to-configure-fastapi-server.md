@@ -1,10 +1,42 @@
-# 如何搭建一台后端服务器
+# 如何搭建一台后端服务器(ubuntu)
 
 ## ssh连接服务器
 
 ```shell
 ssh wutong@hostname
 ```
+
+## 换源
+
+如果你的服务器来自 阿里云或者腾讯云，那自然是不用换源了。这些运营商会帮你配好。
+
+但是如果你的服务器是本地搭建的，或者是来自国外的vps，那你就需要换成一些网络稳定的国内源。
+
+Ubuntu 的软件源配置文件是 `/etc/apt/sources.list`。将系统自带的该文件做个备份，将该文件替换为下面内容，即可使用选择的软件源镜像。
+
+首先备份源文件：
+
+```shell
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+```
+
+然后将 /etc/apt/sources.list 文件替换为以下内容:
+
+```text
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.bfsu.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.bfsu.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.bfsu.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+```
+
+然后apt更新一下源：
+
+```shell
+sudo apt update
+```
+
+> 这是 https://mirrors.bfsu.edu.cn 中国清华镜像源，如果你不知道其他的更好的源，那就用这个就行了。
 
 ## 配置Python环境
 
@@ -52,7 +84,124 @@ nano ~/.ssh/authorized_keys
 
 并设置相应权限。把刚刚复制的密钥粘贴到~/.ssh/authorized_keys文件中，如果文件已经有内容就添加到最后一行，这样每次使用ssh登录服务器就不用再输入密码了
 
-## 重启
+然后重启即可：
+
+```shell
+sudo reboot
+```
+
+## 如何把装好的环境copy到另一台机器上
+
+1.ssh连上服务器
+
+2.找到配置的环境目录
+
+3.直接rsync整个文件夹到eight2: rsync -avP 本地文件夹 用户名@远程服务器:远程地址
+
+比如：
+
+```shell
+rsync -avp /data/wutong/miniconda3 eight2.local:/data/wutong/
+```
+
+系统会提示你输出服务器密码，输入后等待拷贝完成就行了。
+
+这样就把一台服务器的Python环境直接拷贝到另一台服务器上了，可直接使用。
+
+## 安装Docker
+
+1. 首先apt安装相关依赖包：
+
+```shell
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+```
+
+2. 添加 Docker 的官方 GPG 密钥：
+
+```shell
+curl -fsSL https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+```
+
+3. 使用以下指令设置稳定版仓库:
+
+```shell
+sudo add-apt-repository \
+   "deb [arch=amd64] https://mirrors.ustc.edu.cn/docker-ce/linux/ubuntu/ \
+   $(lsb_release -cs) \
+   stable"
+```
+
+4. 更新 apt 包索引：
+
+```shell
+sudo apt-get update
+```
+
+5. 安装最新版本的 Docker:
+
+```shell
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+```
+
+6. 测试 Docker 是否安装成功，输入以下指令，打印出以下信息则安装成功:
+
+```text
+$ sudo docker run hello-world
+
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+1b930d010525: Pull complete                                                                                                                                  Digest: sha256:c3b4ada4687bbaa170745b3e4dd8ac3f194ca95b2d0518b417fb47e5879d9b5f
+Status: Downloaded newer image for hello-world:latest
 
 
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
 
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+```
+
+7. 如果要使用 Docker 作为非 root 用户，则应考虑使用类似以下方式将用户添加到 docker 组：
+
+```shell
+sudo usermod -aG docker ai
+```
+
+8. 然后重启docker即可：
+
+```shell
+sudo systemctl restart docker
+```
+
+9. 设置docker开机自动启动：
+
+```shell
+sudo systemctl enable docker
+```
+
+这样每次开机就会自启动docker服务.
