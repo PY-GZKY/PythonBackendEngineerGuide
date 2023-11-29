@@ -1,4 +1,6 @@
-# 如何快速部署 `FastAPI` 服务
+# 快速部署
+
+## 如速部署 `FastAPI` 服务
 
 `fastapi` 官方推荐使用 `uvicron` 服务器来部署其服务
 
@@ -10,20 +12,16 @@
 
 `Uvicorn`目前支持`HTTP/1.1`和`WebSockets`。 计划支持`HTTP/2`。
 
-
 由于 `Uvicron` 的诞生，以及 `fastapi` 本身支持高性能的异步请求，在 `Python` 轻量级框架中有着质的飞跃。
 这也是 `fastapi` 近来大火的原因，某些程度上更好的替代了 `flask` 的江湖地位。
 
-
-
 ### 安装 `Uvicron`
-
 
 ```shell
 pip install uvicorn
 ```
 
-## 构建一个简单的应用程序
+### 构建一个简单的应用程序
 
 > 新建一个 main.py 文件并编写一下代码
 
@@ -33,9 +31,11 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+
 @app.get("/")
 def home(name="fastapi"):
     return f"Hello! {name}"
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host='127.0.0.1', port=8000, debug=True)
@@ -44,6 +44,7 @@ if __name__ == "__main__":
 可以看到 `fastapi` 的语法和 `flask`非常接近，不管是从设计模式还是感官上来说都有着异曲同工之妙 ！！
 
 我们通过:
+
 ````shell
 python main.py
 ````
@@ -62,7 +63,6 @@ INFO: Waiting for application startup.
 INFO: Application startup complete.
 ```
 
-
 在开发过程中，我们想知道代码被改变时接口或页面上实时的同步更改，指定 `--reload `参数为 `True` 可以解决这个问题，也叫热加载 ！！
 
 ```shell
@@ -73,6 +73,7 @@ if __name__ == "__main__":
 ### 后台启动 `uvicorn`
 
 在线上部署的时候，我们需要将 `web服务`永久的在后台运行，可以使用:
+
 ```shell
 nohup uvicorn main:app --workers 4 --host=0.0.0.0 --port 8080 >> ./output.log 2>&1 &
 ```
@@ -82,6 +83,7 @@ nohup uvicorn main:app --workers 4 --host=0.0.0.0 --port 8080 >> ./output.log 2>
 我们启用了` 4` 个线程，一般来说线程数为宿主机内核的双倍数，比如 `2` 核的主机即开启 `4` 个线程即可。
 
 查看 uvicorn 是否正常工作
+
 ```shell
 ps -ef | grep 8080
 ```
@@ -94,6 +96,7 @@ root  3855  6709  0 11:27 pts/1    00:00:00 grep --color=auto 8006
 `--port` 参数对外开放了 `8080` 端口，通过 `http://IP:8080` 访问目标主机可以看到服务已经正常启。
 
 `nohup` 会将所有的 `print`、 `log` 、`debug` 输出的信息汇总到`./output.log` 文件，大概是这样的:
+
 ```bash
 2021-04-08 09:00:06.622 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
 2021-04-08 09:00:06.639 | DEBUG    | app.api.db.mysqlDB:bulk_save:21 - [+] 插入成功 !!! =========  erp3c_customer_delivery   ========
@@ -157,6 +160,7 @@ server {
 nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok
 nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
 ```
+
 出现以上信息则说明配置文件无误，否则根据报错行数修正配置文件即可 ！！
 
 > 只要确保 `:8080` 服务正常和`Nginx 配置`文件无异常，项目将顺利启动。
@@ -169,7 +173,7 @@ nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
 
 ## `Uvicorn` + `Nginx` + `Docker`
 
-> `Docker` 是一个开源的应用容器引擎，基于 `Go` 语言 并遵从 `Apache2.0 `协议开源。 
+> `Docker` 是一个开源的应用容器引擎，基于 `Go` 语言 并遵从 `Apache2.0 `协议开源。
 > `Docker` 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 `Linux` 机器上，也可以实现虚拟化。
 > 号称`远程小型虚拟机`，但是更轻更快 ！！
 
@@ -186,6 +190,7 @@ pip freeze > requirements.txt
 ### `Nginx` 配置文件
 
 在 `code/config/nginx` 下新建 `web_app.conf` 文件并写入以下配置
+
 ```shell
 upstream app {
   ip_hash;
@@ -240,6 +245,7 @@ ADD . /code/
 ### 安装 `Docker-compose`
 
 既然我们已经在本地安装了 `Python`版本，可以使用 `pip` 安装 `Docker-compose`
+
 ```shell
 pip install Docker-compose
 ```
@@ -247,12 +253,13 @@ pip install Docker-compose
 > 安装后即刻生效
 
 验证是否正常工作:
+
 ```shell
 [root@gzky_gz conf]# Docker-compose -v
 Docker-compose version 1.28.6
 ```
-> 没有问题 ！！
 
+> 没有问题 ！！
 
 ### 构建 `docker-compose.yml` 文件
 
@@ -326,6 +333,7 @@ Docker-compose up
 ```shell
 npm run build
 ```
+
 通过以上命令可以对 `Vue` 项目进行打包，不出意外的话就生成一个默认名为 `dist` 的静态文件目录，也就是最后打包的结果了 ！！
 
 而至于`fastapi`的后端接口则可以存在于任何一台有`公网ip`的机器，前端项目只需要改动`ip` 即可。
@@ -333,6 +341,7 @@ npm run build
 ### `Nginx`部署`Vue`项目
 
 在 `nginx.conf`中编辑以下配置
+
 ```shell
 server {
   listen 80;
@@ -344,12 +353,60 @@ server {
         }
 }
 ```
-让 `Nginx` 找到 `/code/dist` 目录并将目录下的`index.html` 作为`Nginx`首页，`纯静态部署`总是如此的简单 ！！
 
+让 `Nginx` 找到 `/code/dist` 目录并将目录下的`index.html` 作为`Nginx`首页，`纯静态部署`总是如此的简单 ！！
 
 ### 部署多个`Vue`项目
 
 虽然一个`Nginx`也能够部署多个 `Vue`项目，但是我还是不建议这样的做法，一旦`Vue`项目体量过大，调度的接口过多，则会发生性能不足的情况。
 可以使用搭建多个`Nginx` 服务器来挂载多个`Vue`项目(或其他前端项目)，一个`Nginx`对应一个`Vue`项目。
 而理论上，只要我们的机器的`cpu`和`内存`足够，可以搭建很多很多的`Nginx`，只需改变其默认端口即可。
+
+## acme.sh
+
+### 安装
+
+安装很简单，就一个命令：
+
+```bash
+curl https://get.acme.sh | sh
+```
+
+普通用户和 root 用户都可以安装使用。这会安装在 ~/.acme.sh/ 目录下，以后生成的证书也会在这里面，按照域名为文件夹安置。
+
+理论上会自动添加一个 acme.sh 别名，但有时候并不会生成，需要手动执行以下命令： `source ~/.bashrc`
+
+### 使用dns api的模式进行证书申请
+
+获取 AccessKey ID和AccessKey Secret
+
+```bash
+export Ali_Key="key"
+export Ali_Secret="key Secret"
+
+# 下次就不用再次执行这个命令了
+acme.sh --issue --dns dns_ali -d *.example.com --force
+```
+
+### 自动更新证书
+
+Let's 的证书有效期为60天
+
+目前手动添加DNS获取证书的方式无法自动更新，但是使用DNS API的方式进行获取证书可以在 60 天以后会自动更新, 你无需任何操作.
+
+强制执行更新任务: `acme.sh --cron -f`
+
+### 升级
+
+目前由于 acme 协议和 Let`s CA 都在频繁的更新, 因此 acme.sh 也经常更新以保持同步.
+
+升级 acme.sh 到最新版 : `acme.sh --upgrade`
+
+如果你不想手动升级, 可以开启自动升级: `acme.sh --upgrade --auto-upgrade` 之后, acme.sh 就会自动保持更新了.
+
+你也可以随时关闭自动更新: `acme.sh --upgrade --auto-upgrade 0`
+
+
+
+
 
