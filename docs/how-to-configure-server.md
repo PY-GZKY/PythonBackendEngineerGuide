@@ -1,4 +1,15 @@
-# 如何搭建一台后端服务器(ubuntu)
+# Ubuntu装机指南
+
+## 单台服务器硬件建议
+
+* CPU：8核心处理器
+* 主板：Kingston A2000
+* 硬盘：1T、2T 或更多
+* 内存：8GB、16GB 或更多
+
+这是一个基本的配置，具体的选择还取决于你服务器的使用情况。如果你的服务器将用于运行大型数据库、虚拟化环境或其他内存密集型任务，你可能需要更多的内存。
+
+同样，如果预算允许，可以考虑选择更高性能的 CPU 和更大容量的 SSD。
 
 ## ssh连接服务器
 
@@ -38,12 +49,23 @@ sudo apt update
 
 > 这是 https://mirrors.bfsu.edu.cn 中国清华镜像源，如果你不知道其他的更好的源，那就用这个就行了。
 
-## 配置Python环境
+## 配置 Python 环境
+
+Anaconda 官方下载页面：https://www.anaconda.com/downloads
+
+你只需要下载对应系统的安装包，然后直接运行安装包即可
+
+如果遇到网络问题，可以使用清华大学的镜像，如
 
 ```shell
-# 安装 Python 环境
 wget https://mirrors.bfsu.edu.cn/anaconda/miniconda/Miniconda3-py310_23.3.1-0-Linux-x86_64.sh
 bash Miniconda3-py310_23.3.1-0-Linux-x86_64.sh -b
+```
+
+检查 miniconda 是否安装成功
+
+```shell
+conda --version
 ```
 
 ## 配置zsh
@@ -205,3 +227,28 @@ sudo systemctl enable docker
 ```
 
 这样每次开机就会自启动docker服务.
+
+10. portainer
+
+Portainer 是一个轻量级的管理界面，它允许您轻松地管理不同的 Docker 环境。Portainer 提供了一个直观的图形用户界面（GUI），通过它，用户可以管理 Docker 容器、镜像、网络和卷，而不需要使用 Docker
+命令行工具。Portainer 适用于管理单个本地 Docker 环境，也可以用来管理多个 Docker 主机或 Swarm 集群。
+
+使用 Portainer，您可以：
+
+- 查看、创建、删除和管理容器。
+- 查看、拉取和管理镜像。
+- 创建、编辑和管理网络。
+- 创建、编辑和删除卷，以及管理数据持久化。
+- 查看容器的实时日志。
+- 通过控制台与容器进行交互。
+- 管理 Docker Swarm 或 Kubernetes 集群。
+- 管理用户和团队的访问权限。
+- 部署应用程序模板或使用Docker Compose。
+
+Portainer 是为了简化 Docker 管理任务而设计的，它特别适合那些不熟悉 Docker 命令行或寻求更简单方法来管理容器的用户。
+
+```shell
+ docker run -d -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock --name portainer portainer/portainer
+```
+
+一旦容器启动，您可以通过浏览器访问 http://<宿主机IP>:9000 来使用 Portainer 的管理界面。如果这是第一次运行 Portainer，它会提示您创建一个管理员用户。
