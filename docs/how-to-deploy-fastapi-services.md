@@ -385,8 +385,19 @@ export Ali_Key="key"
 export Ali_Secret="key Secret"
 
 # 下次就不用再次执行这个命令了
-acme.sh --issue --dns dns_ali -d *.example.com --force
+./acme.sh --issue --dns dns_ali -d *.example.com --force
 ```
+
+### 生成 .key 和 .crt证书
+
+```shell
+./acme.sh --install-cert -d "*.gzsonic.com" --cert-file cert.crt --key-file key.key --fullchain-file ca.crt
+```
+
+.key 和 .crt证书可用于 nginx 证书部署.
+
+
+> 参考: https://github.com/acmesh-official/acme.sh
 
 ### 自动更新证书
 
