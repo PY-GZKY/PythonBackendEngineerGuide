@@ -61,7 +61,10 @@ nav:
       - 首页: README.md
 
   - 服务器配置:
-      - 如何搭建一台后端服务器: how-to-configure-fastapi-server.md
+      - 如何搭建一台后端服务器: how-to-configure-server.md
+
+  - 搭建数据库应用:
+      - 如何快速搭建数据库服务: how-to-quickly-deploy-database.md
 
   - FastAPI框架:
       - 如何快速开发 FastAPI 应用: how-to-quickly-develop-fastapi-application.md
