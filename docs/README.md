@@ -3,8 +3,7 @@
 ![Python](https://img.shields.io/badge/Python-3.9+-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-latest-green)
 
-在线阅读：[https://fastapi.tplan.cc](https://fastapi.tplan.cc)  
-在线阅读：[https://py-gzky.github.io/PythonBackendEngineerGuide/](https://py-gzky.github.io/PythonBackendEngineerGuide/)  
+在线阅读：[https://fastapi.tplan.cc](https://fastapi.tplan.cc)   
 项目地址：[https://github.com/PY-GZKY/PythonBackendEngineerGuide](https://github.com/PY-GZKY/PythonBackendEngineerGuide)
 
 * [如何搭建一台后端服务器](how-to-configure-server.md)
