@@ -130,6 +130,12 @@ rsync -avp /data/wutong/miniconda3 eight2.local:/data/wutong/
 
 这样就把一台服务器的Python环境直接拷贝到另一台服务器上了，可直接使用。
 
+## 如何查看一台服务器当前有多少个SSH连接数
+
+```shell
+who | grep -i pts | wc -l
+```
+
 ## 安装Docker
 
 1. 首先apt安装相关依赖包：
