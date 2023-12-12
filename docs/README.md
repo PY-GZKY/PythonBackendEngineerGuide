@@ -12,8 +12,9 @@
     * 硬盘：1T、2T 或更多
     * 内存：8GB、16GB 或更多
 
-* FastAPI
+* [FastAPI开发](how-to-quickly-develop-fastapi-application.md)
     * [如何快速开发 FastAPI 应用](how-to-quickly-develop-fastapi-application.md)
     * [如何快速部署 FastAPI 服务](how-to-deploy-fastapi-services.md)
     * [如何为 FastAPI 集成插件](how-to-integrate-plugins.md)
 
+* [如何搭建一个站点监控服务](how-to-build-site-monitoring-service.md)
