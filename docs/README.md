@@ -18,3 +18,5 @@
     * [如何为 FastAPI 集成插件](how-to-integrate-plugins.md)
 
 * [如何搭建一个站点监控服务](how-to-build-site-monitoring-service.md)
+
+* [如何使用docker部署](how-to-deploy-using-docker.md)
