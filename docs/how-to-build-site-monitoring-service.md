@@ -1,4 +1,4 @@
-# 站点监控
+# 监控服务
 
 - https://github.com/louislam/uptime-kuma
 - https://github.com/louislam/uptime-kuma/wiki
@@ -39,3 +39,40 @@ docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data --name upti
 ```
 
 对于每个新版本，构建 docker 镜像都需要一些时间，如果还没有，请耐心等待。
+
+## 如何使用docker监控节点性能
+
+一般来说采用 prometheus + grafana + exporter 的方式来监控各类服务的指标。
+
+首先，使用 docker-compose.yml 文件启动一个p容器：
+
+```yaml
+version: '3'
+
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  prometheus_data: {}
+
+services:
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    ports:
+      - 9090:9090
+    networks:
+      - monitoring
+```
