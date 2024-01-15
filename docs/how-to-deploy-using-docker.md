@@ -28,3 +28,17 @@ docker run -d --name redis \
 -p 6379:6379 \
 redis:5.0.3 redis-server /etc/redis.conf
 ```
+
+
+### 清除所有异常退出的容器
+
+```shell
+docker ps -a | grep Exited | awk '{print $1}' | xargs docker rm
+```
+
+### 清空所有镜像名称为空的镜像
+
+```shell
+docker images -q --filter "dangling=true" | xargs docker rmi
+```
+
