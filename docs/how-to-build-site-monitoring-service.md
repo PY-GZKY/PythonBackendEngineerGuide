@@ -19,7 +19,7 @@ Uptime Kuma 是一款易于使用的自托管监控工具。
 - 代理支持
 - 2FA 支持
 
-使用docker run快速启动服务：
+使用 docker run 快速启动服务：
 
 ```shell
 docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data --name uptime-kuma louislam/uptime-kuma:1
@@ -72,7 +72,7 @@ services:
       - '--web.console.templates=/etc/prometheus/consoles'
       - '--web.enable-lifecycle'
     ports:
-      - 9090:9090
+      - "9090:9090"
     networks:
       - monitoring
 ```
