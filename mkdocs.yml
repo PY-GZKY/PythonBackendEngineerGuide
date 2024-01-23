@@ -63,7 +63,7 @@ nav:
   - 服务器配置:
       - 如何搭建一台后端服务器: how-to-configure-server.md
 
-  - 搭建数据库应用:
+  - 数据库应用:
       - 如何快速搭建数据库服务: how-to-quickly-deploy-database.md
 
   - FastAPI框架:
