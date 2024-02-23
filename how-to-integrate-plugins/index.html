@@ -1,0 +1,1739 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Python后端工程师生存指南">
+      
+      
+        <meta name="author" content="梧桐">
+      
+      
+        <link rel="canonical" href="https://fastapi.tplan.cc/how-to-integrate-plugins/">
+      
+      
+        <link rel="prev" href="../how-to-deploy-fastapi-services/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.10">
+    
+    
+      
+        <title>如何为 FastAPI 集成插件 - Python后端工程师生存指南</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e359304.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","UA-111276663-2"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","UA-111276663-2",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=UA-111276663-2",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fastapi" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="Python后端工程师生存指南" class="md-header__button md-logo" aria-label="Python后端工程师生存指南" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Python后端工程师生存指南
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              如何为 FastAPI 集成插件
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="打开深色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="打开深色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5M7 15a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="关闭深色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="关闭深色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4m0-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/py-gzky/fastapi-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    py-gzky/fastapi-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+    
+  
+  首页
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../how-to-configure-server/" class="md-tabs__link">
+          
+  
+    
+  
+  服务器配置
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../how-to-quickly-deploy-database/" class="md-tabs__link">
+          
+  
+    
+  
+  数据库应用
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../how-to-quickly-develop-fastapi-application/" class="md-tabs__link">
+          
+  
+    
+  
+  FastAPI框架
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Python后端工程师生存指南" class="md-nav__button md-logo" aria-label="Python后端工程师生存指南" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Python后端工程师生存指南
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/py-gzky/fastapi-docs" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    py-gzky/fastapi-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href=".." class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    首页
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            首页
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    服务器配置
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            服务器配置
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-configure-server/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    如何搭建一台后端服务器
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    数据库应用
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            数据库应用
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-quickly-deploy-database/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    如何快速搭建数据库服务
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    FastAPI框架
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            FastAPI框架
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-quickly-develop-fastapi-application/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    如何快速开发 FastAPI 应用
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../how-to-deploy-fastapi-services/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    如何快速部署 FastAPI 服务
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    如何为 FastAPI 集成插件
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    如何为 FastAPI 集成插件
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#supervisor" class="md-nav__link">
+    <span class="md-ellipsis">
+      supervisor
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="supervisor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start 某一个应用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      问题不大
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      报错答疑
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="报错答疑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#astarting-supervisor-unlinking-stale-socket-varrunsupervisorsock" class="md-nav__link">
+    <span class="md-ellipsis">
+      A：Starting supervisor: Unlinking stale socket /var/run/supervisor.sock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bcentos7errorfailed-to-start-firewalldservice-unit-firewalldservice-is-masked" class="md-nav__link">
+    <span class="md-ellipsis">
+      B：CentOS7：【error】Failed to start firewalld.service: Unit firewalld.service is masked
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-firewall-cmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      C: firewall-cmd
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本配置项说明
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apscheduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apscheduler
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apscheduler_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      APScheduler 组件：
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apscheduler_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apscheduler 模块
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apscheduler_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apscheduler 触发器类型
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apscheduler_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apscheduler 持久化
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      准备两个被调函数
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      监听事件
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      开启定时任务
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      总体代码
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      关闭调度器
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      暂停/恢复调度器
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      共享队列
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#supervisor" class="md-nav__link">
+    <span class="md-ellipsis">
+      supervisor
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="supervisor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#start" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#start_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start 某一个应用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      问题不大
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      报错答疑
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="报错答疑">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#astarting-supervisor-unlinking-stale-socket-varrunsupervisorsock" class="md-nav__link">
+    <span class="md-ellipsis">
+      A：Starting supervisor: Unlinking stale socket /var/run/supervisor.sock
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bcentos7errorfailed-to-start-firewalldservice-unit-firewalldservice-is-masked" class="md-nav__link">
+    <span class="md-ellipsis">
+      B：CentOS7：【error】Failed to start firewalld.service: Unit firewalld.service is masked
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c-firewall-cmd" class="md-nav__link">
+    <span class="md-ellipsis">
+      C: firewall-cmd
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本配置项说明
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apscheduler" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apscheduler
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apscheduler_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      APScheduler 组件：
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apscheduler_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apscheduler 模块
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apscheduler_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apscheduler 触发器类型
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#apscheduler_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Apscheduler 持久化
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      准备两个被调函数
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      监听事件
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      开启定时任务
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      总体代码
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      关闭调度器
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      暂停/恢复调度器
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      共享队列
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="fastapi">如何为 <code>FastAPI</code> 集成插件</h1>
+<h2 id="supervisor">supervisor</h2>
+<div class="codehilite"><pre><span></span><code>yum<span class="w"> </span>install<span class="w"> </span>Supervisor
+</code></pre></div>
+
+<p>进入<code>cd /etc/supervisor</code> 目录 找到 <code>supervisord.conf</code> 配置文件 和
+<code>supervisord.d</code> 文件夹，编辑s<code>upervisord.conf</code>文件（默认在 <code>/etc/supervisor/supervisord.conf</code>）</p>
+<p><code>files = supervisord.d/*.ini</code> 这句代码说明它会加载<code>supervisord.d</code>文件夹中的所有<code>.ini</code>配置文件</p>
+<h4 id="start">Start</h4>
+<div class="codehilite"><pre><span></span><code>supervisord<span class="w"> </span>-c<span class="w"> </span>/etc/supervisor/supervisord.conf
+</code></pre></div>
+
+<h4 id="start_1">Start 某一个应用</h4>
+<div class="codehilite"><pre><span></span><code><span class="c1"># 重启supervisor</span>
+supervisorctl<span class="w"> </span>reload
+<span class="c1"># 启动名字为django的program </span>
+supervisorctl<span class="w"> </span>start<span class="w"> </span>django
+<span class="c1"># 停止名字为django的program </span>
+supervisorctl<span class="w"> </span>stop<span class="w"> </span>django
+<span class="c1"># 查看名字为django的program 状态</span>
+supervisorctl<span class="w"> </span>status<span class="w"> </span>django
+<span class="c1"># 查看所有program的状态</span>
+supervisorctl<span class="w"> </span>status<span class="w"> </span>all
+<span class="c1"># 停止所有program</span>
+supervisorctl<span class="w"> </span>stop<span class="w"> </span>all
+</code></pre></div>
+
+<p>如 xxx.ini 放于 supervisord.d 下</p>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span>program:DeployLinux<span class="o">]</span><span class="w">   </span><span class="c1">#DeployLinux  为程序的名称</span>
+<span class="nv">command</span><span class="o">=</span>dotnet<span class="w"> </span>DeployLinux.dll<span class="w"> </span><span class="c1">#需要执行的命令</span>
+<span class="nv">directory</span><span class="o">=</span>/home/publish<span class="w"> </span><span class="c1">#命令执行的目录</span>
+<span class="nv">environment</span><span class="o">=</span><span class="nv">ASPNETCORE__ENVIRONMENT</span><span class="o">=</span>Production<span class="w"> </span><span class="c1">#环境变量</span>
+<span class="nv">user</span><span class="o">=</span>root<span class="w"> </span><span class="c1">#用户</span>
+<span class="nv">stopsignal</span><span class="o">=</span>INT<span class="w"> </span>
+<span class="nv">autostart</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="c1">#是否自启动</span>
+<span class="nv">autorestart</span><span class="o">=</span><span class="nb">true</span><span class="w"> </span><span class="c1">#是否自动重启</span>
+<span class="nv">startsecs</span><span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="c1">#自动重启时间间隔（s）</span>
+<span class="nv">stderr_logfile</span><span class="o">=</span>/var/log/ossoffical.err.log<span class="w"> </span><span class="c1">#错误日志文件</span>
+<span class="nv">stdout_logfile</span><span class="o">=</span>/var/log/ossoffical.out.log<span class="w"> </span><span class="c1">#输出日志文件</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>supervisorctl<span class="w"> </span>reload<span class="w">  </span>//重新加载配置文件
+</code></pre></div>
+
+<p><code>supervisord.conf</code> 配置项中</p>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span>inet_http_server<span class="o">]</span><span class="w">         </span><span class="p">;</span><span class="w"> </span>inet<span class="w"> </span><span class="o">(</span>TCP<span class="o">)</span><span class="w"> </span>server<span class="w"> </span>disabled<span class="w"> </span>by<span class="w"> </span>default
+<span class="nv">port</span><span class="o">=</span><span class="m">0</span>.0.0.0:9001<span class="w">          </span><span class="p">;</span><span class="w"> </span>ip_address:port<span class="w"> </span>specifier,<span class="w"> </span>*:port<span class="w"> </span><span class="k">for</span><span class="w"> </span>all<span class="w"> </span>iface
+<span class="nv">username</span><span class="o">=</span>user<span class="w">              </span><span class="p">;</span><span class="w"> </span>default<span class="w"> </span>is<span class="w"> </span>no<span class="w"> </span>username<span class="w"> </span><span class="o">(</span>open<span class="w"> </span>server<span class="o">)</span>
+<span class="nv">password</span><span class="o">=</span><span class="m">123</span><span class="w">               </span><span class="p">;</span><span class="w"> </span>default<span class="w"> </span>is<span class="w"> </span>no<span class="w"> </span>password<span class="w"> </span><span class="o">(</span>open<span class="w"> </span>server<span class="o">)</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>firewall-cmd<span class="w"> </span>--query-port<span class="o">=</span><span class="m">9001</span>/tcp<span class="w">     </span>
+firewall-cmd<span class="w"> </span>--add-port<span class="o">=</span><span class="m">9001</span>/tcp<span class="w">           </span>
+firewall-cmd<span class="w"> </span>--reload<span class="w">                 </span>
+</code></pre></div>
+
+<h4 id="_1">问题不大</h4>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>--request<span class="w"> </span>GET<span class="w"> </span>-sL<span class="w"> </span><span class="se">\</span>
+<span class="w">     </span>--url<span class="w"> </span><span class="s1">&#39;http://127.0.0.1:9001&#39;</span>
+</code></pre></div>
+
+<blockquote>
+<p>PS: supervisord 依赖于 Python2, 但是 supervisor 客户端库可以用 pip3 安装</p>
+</blockquote>
+<h2 id="_2">报错答疑</h2>
+<h4 id="astarting-supervisor-unlinking-stale-socket-varrunsupervisorsock">A：Starting supervisor: Unlinking stale socket /var/run/supervisor.sock</h4>
+<div class="codehilite"><pre><span></span><code>find<span class="w"> </span>/<span class="w"> </span>-name<span class="w"> </span>supervisor.sock
+unlink<span class="w"> </span>/***/supervisor.sock
+</code></pre></div>
+
+<h4 id="bcentos7errorfailed-to-start-firewalldservice-unit-firewalldservice-is-masked">B：CentOS7：【error】Failed to start firewalld.service: Unit firewalld.service is masked</h4>
+<div class="codehilite"><pre><span></span><code>systemctl<span class="w"> </span>unmask<span class="w"> </span>firewalld.service
+</code></pre></div>
+
+<h4 id="c-firewall-cmd">C: firewall-cmd</h4>
+<div class="codehilite"><pre><span></span><code><span class="c1"># firewall-cmd --zone=public --add-port=80/tcp --permanent    </span>
+
+命令含义：
+
+--zone<span class="w"> </span><span class="c1">#作用域</span>
+--add-port<span class="o">=</span><span class="m">80</span>/tcp<span class="w">  </span><span class="c1">#添加端口，格式为：端口/通讯协议</span>
+--permanent<span class="w">   </span><span class="c1">#永久生效，没有此参数重启后失效</span>
+
+从public移除<span class="w"> </span>interface<span class="w">  </span>
+<span class="c1"># firewall-cmd --zone=public  --remove-interface=eno16777736  </span>
+
+查询外网端口<span class="w">  </span>
+<span class="c1"># firewall-cmd --permanent --query-port=8080/tcp  </span>
+
+删除8080端口，禁止外网访问<span class="w">  </span>
+<span class="c1"># firewall-cmd --permanent --remove-port=8080/tcp   </span>
+
+添加8080端口，供外网访问<span class="w">  </span>
+<span class="c1"># firewall-cmd --permanent --add-port=8080/tcp   </span>
+
+暂时开放ftp服务
+firewall-cmd<span class="w"> </span>--add-service<span class="o">=</span>ftp
+
+永久开放ftp服务
+firewall-cmd<span class="w"> </span>--add-service<span class="o">=</span>ftp<span class="w"> </span>--permanent
+
+永久关闭ftp服务
+firewall-cmd<span class="w"> </span>--remove-service<span class="o">=</span>ftp<span class="w"> </span>--permanent
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code>systemctl<span class="w"> </span>start<span class="w"> </span>firewalld.service
+systemctl<span class="w"> </span>stop<span class="w"> </span>firewalld.service
+systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>firewalld.service
+systemctl<span class="w"> </span>disable<span class="w"> </span>firewalld.service
+systemctl<span class="w"> </span>status<span class="w"> </span>firewalld
+</code></pre></div>
+
+<h4 id="_3">基本配置项说明</h4>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span>unix_http_server<span class="o">]</span>：这部分设置HTTP服务器监听的UNIX<span class="w"> </span>domain<span class="w"> </span>socket
+file:<span class="w"> </span>指向UNIX<span class="w"> </span>domain<span class="w"> </span>socket，即file<span class="o">=</span>/var/run/supervisor.sock
+chmod：启动时改变supervisor.sock的权限
+
+<span class="o">[</span>inet_http_server<span class="o">]</span>启动<span class="w"> </span>supervisorctl<span class="w"> </span>客户端后，可以用浏览器打开输入用户名、密码后，进入web界面
+<span class="nv">port</span><span class="o">=</span><span class="m">127</span>.0.0.1:9001<span class="w"> </span><span class="p">;</span><span class="w"> </span>ip_address:port<span class="w"> </span>specifier,<span class="w"> </span>*:port<span class="w"> </span><span class="k">for</span><span class="w"> </span>all<span class="w"> </span>iface
+<span class="nv">username</span><span class="o">=</span>root<span class="w"> </span><span class="p">;</span><span class="w"> </span>default<span class="w"> </span>is<span class="w"> </span>no<span class="w"> </span>username<span class="w"> </span><span class="o">(</span>open<span class="w"> </span>server<span class="o">)</span>
+<span class="nv">password</span><span class="o">=</span><span class="m">123</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>default<span class="w"> </span>is<span class="w"> </span>no<span class="w"> </span>password<span class="w"> </span><span class="o">(</span>open<span class="w"> </span>server<span class="o">)</span>
+
+<span class="o">[</span>supervisord<span class="o">]</span>：与supervisord有关的全局配置需要在这部分设置
+<span class="nv">logfile</span><span class="o">=</span>/usr/local/var/log/supervisord.log<span class="w"> </span><span class="p">;</span>日志文件，默认是<span class="w"> </span><span class="nv">$CWD</span>/supervisord.log
+<span class="nv">logfile_maxbytes</span><span class="o">=</span>50MB<span class="w"> </span><span class="p">;</span>日志文件大小，超出会rotate，默认<span class="w"> </span>50MB，如果设成0，表示不限制大小
+<span class="nv">logfile_backups</span><span class="o">=</span><span class="m">10</span><span class="w"> </span><span class="p">;</span>日志文件保留备份数量默认10，设为0表示不备份
+<span class="nv">loglevel</span><span class="o">=</span>info<span class="w"> </span><span class="p">;</span>日志级别，默认info，其它:<span class="w"> </span>debug,warn,trace
+<span class="nv">pidfile</span><span class="o">=</span>/usr/local/supervisor-3.3.4/supervisord.pid<span class="w"> </span><span class="p">;</span>pid<span class="w"> </span>文件
+<span class="nv">nodaemon</span><span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="p">;</span>是否在前台启动，默认是false，即以<span class="w"> </span>daemon<span class="w"> </span>的方式启动
+<span class="nv">minfds</span><span class="o">=</span><span class="m">1024</span><span class="w"> </span><span class="p">;</span>可以打开的文件描述符的最小值，默认<span class="w"> </span><span class="m">1024</span>
+<span class="nv">minprocs</span><span class="o">=</span><span class="m">200</span><span class="w"> </span><span class="p">;</span>可以打开的进程数的最小值，默认<span class="w"> </span><span class="m">200</span>
+
+<span class="o">[</span>supervisorctl<span class="o">]</span>：
+serverurl：进入supervisord的URL，<span class="w"> </span>对于UNIX<span class="w"> </span>domain<span class="w"> </span>sockets,<span class="w"> </span>应设为<span class="w"> </span>unix:///absolute/path/to/file.sock
+
+<span class="o">[</span>include<span class="o">]</span>：如果配置文件包含该部分，则该部分必须包含一个files键：
+files：包含一个或多个文件，这里包含了/etc/supervisor/conf.d/目录下所有的.conf文件，可以在该目录下增加我们自己的配置文件，在该配置文件中增加<span class="o">[</span>program:x<span class="o">]</span>部分，用来运行我们自己的程序，如下：
+
+子程序的相关配置
+<span class="o">[</span>program:capital-balance<span class="o">]</span><span class="w"> </span>：配置文件必须包括至少一个program，x是program名称，必须写上，不能为空
+<span class="nv">directory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/Library/WebServer/Documents/project<span class="w"> </span><span class="p">;</span>执行子进程时supervisord暂时切换到该目录
+<span class="nb">command</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>/bin/bash<span class="w"> </span>-c<span class="w"> </span>‘./yii<span class="w"> </span>执行的命令’<span class="w"> </span><span class="p">;</span>包含一个命令，当这个program启动时执行
+<span class="nv">autostart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<span class="nv">startsecs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span>
+<span class="nv">autorestart</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span>
+<span class="nv">startretries</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">;</span>进程从STARING状态转换到RUNNING状态program所需要保持运行的时间（单位：秒）
+<span class="nv">user</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>user
+<span class="nv">process_name</span><span class="o">=</span>%<span class="o">(</span>program_name<span class="o">)</span>s_%<span class="o">(</span>process_num<span class="o">)</span>002d<span class="w"> </span><span class="p">;</span>当numprocs大于1是需要使用这个
+<span class="nv">numprocs</span><span class="o">=</span><span class="m">2</span>
+<span class="nv">redirect_stderr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>true<span class="p">;</span>如果是true，则进程的stderr输出被发送回其stdout文件描述符上的supervisord
+<span class="nv">stdout_logfile_backups</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">;</span>要保存的stdout_logfile备份的数量
+<span class="nv">stdout_logfile</span><span class="o">=</span>/Library/WebServer/Documents/capital/backend/runtime/logs/supervisor/testPopQueue.log<span class="p">;</span>将进程stdout输出到指定文件
+<span class="nv">stdout_logfile_maxbytes</span><span class="o">=</span>10MB<span class="p">;</span>stdout_logfile指定日志文件最大字节数，默认为50MB，可以加KB、MB或GB等单位
+<span class="nv">stderr_logfile</span><span class="o">=</span>/Library/WebServer/Documents/capital/backend/runtime/logs/supervisor/testPopQueue-err.log
+<span class="nv">stderr_logfile_maxbytes</span><span class="o">=</span>10MB
+</code></pre></div>
+
+<h2 id="apscheduler">Apscheduler</h2>
+<p><code>Apscheduler</code> 可能是作为 <code>fastapi</code> 任务队列比较理想的选择，毕竟 <code>Celery</code> 对于<code>fastapi</code> 框架而言难免过重。</p>
+<blockquote>
+<p><code>apscheduler</code>: <a href="https://apscheduler.readthedocs.io/en/stable/userguide.html">https://apscheduler.readthedocs.io/en/stable/userguide.html</a></p>
+</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="err">$</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">apscheduler</span>
+</code></pre></div>
+
+<h2 id="apscheduler_1"><code>APScheduler</code> 组件：</h2>
+<ul>
+<li><code>触发对象</code>(声明要触发的类型以及参数)</li>
+<li><code>JOB存储</code>(<code>Redis、MongoDB</code>)</li>
+<li><code>执行器</code>(<code>AsyncIOExecutor</code>)</li>
+<li><code>调度器</code>(<code>BackgroundScheduler、AsyncIOScheduler</code> )</li>
+</ul>
+<h2 id="apscheduler_2"><code>Apscheduler</code> 模块</h2>
+<ul>
+<li><code>BlockingScheduler</code>：当调度程序是您的流程中唯一运行的东西时使用</li>
+<li><code>BackgroundScheduler</code>：在不使用以下任何框架且希望调度程序在应用程序内部的后台运行时使用</li>
+<li><code>AsyncIOScheduler</code>：如果您的应用程序使用<code>asyncio</code>模块，则使用</li>
+<li><code>GeventScheduler</code>：如果您的应用程序使用<code>gevent</code>，则使用</li>
+<li><code>TornadoScheduler</code>：在构建<code>Tornado</code>应用程序时使用</li>
+<li><code>TwistedScheduler</code>：在构建<code>Twisted</code>应用程序时使用</li>
+<li><code>QtScheduler</code>：在构建<code>Qt</code>应用程序时使用</li>
+</ul>
+<p><code>BlockingScheduler</code> 和 <code>BackgroundScheduler</code> 自不必说，用于非异步操作下的任务队列调度。</p>
+<p>而 <code>fastapi</code> 是一个基于 <code>asyncio</code> 的异步框架，自然就是 <code>AsyncIOScheduler</code> 调度器啦</p>
+<p><code>TornadoScheduler</code> 调度器常用于 <code>Tornado</code> 框架，这也是 <code>Python</code> 另一个牛逼的异步框架，并且比 <code>fastapi</code> 更早。实际上 <code>fastapi</code> 是 <code>stsrlette</code>
+的二次产物，这个我们在开篇的时候早已说过。</p>
+<p><code>TwistedScheduler</code> 调度器可用于 <code>Scrapy</code> 框架等基于<code>Twisted</code> 的应用程序。</p>
+<h2 id="apscheduler_3"><code>Apscheduler</code> 触发器类型</h2>
+<ul>
+<li><code>date</code>：在您希望在特定时间点仅运行<code>一次</code>作业时使用</li>
+<li><code>interval</code>：在您要以固定的<code>时间间隔</code>运行作业时使用</li>
+<li><code>cron</code>：当您想在一天中的特定时间<code>定期</code>运行作业时使用</li>
+</ul>
+<h2 id="apscheduler_4"><code>Apscheduler</code> 持久化</h2>
+<p>为了项目或者程序异常重启和查看最近的任务队列信息，我们应该使用持久化存储 <code>Apscheduler</code> 的任务信息，这里以 Redis 为例。</p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">from</span> <span class="nn">apscheduler.events</span> <span class="kn">import</span> <span class="n">EVENT_JOB_EXECUTED</span>
+<span class="kn">from</span> <span class="nn">apscheduler.executors.asyncio</span> <span class="kn">import</span> <span class="n">AsyncIOExecutor</span>
+<span class="kn">from</span> <span class="nn">apscheduler.jobstores.redis</span> <span class="kn">import</span> <span class="n">RedisJobStore</span>
+<span class="kn">from</span> <span class="nn">apscheduler.schedulers.asyncio</span> <span class="kn">import</span> <span class="n">AsyncIOScheduler</span>
+<span class="kn">from</span> <span class="nn">apscheduler.triggers.interval</span> <span class="kn">import</span> <span class="n">IntervalTrigger</span>
+
+<span class="c1"># redis 存储job信息</span>
+<span class="n">default_redis_jobstore</span> <span class="o">=</span> <span class="n">RedisJobStore</span><span class="p">(</span>
+    <span class="n">db</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">jobs_key</span><span class="o">=</span><span class="s2">&quot;apschedulers.default_jobs&quot;</span><span class="p">,</span>
+    <span class="n">run_times_key</span><span class="o">=</span><span class="s2">&quot;apschedulers.default_run_times&quot;</span><span class="p">,</span>
+    <span class="n">host</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+    <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+
+<span class="c1"># asyncio是的调度执行器</span>
+<span class="n">async_executor</span> <span class="o">=</span> <span class="n">AsyncIOExecutor</span><span class="p">()</span>
+
+<span class="c1"># 初始化scheduler，直接指定 jobstore 和 executor</span>
+<span class="n">init_scheduler_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;jobstores&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;redis&quot;</span><span class="p">:</span> <span class="n">default_redis_jobstore</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;executors&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;redis&quot;</span><span class="p">:</span> <span class="n">async_executor</span>
+    <span class="p">},</span>
+
+    <span class="s2">&quot;job_defaults&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;coalesce&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># 是否合并执行</span>
+        <span class="s1">&#39;max_instances&#39;</span><span class="p">:</span> <span class="mi">8</span>  <span class="c1"># 最大实例数</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1"># 创建 scheduler 实例，字典形式参入</span>
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">AsyncIOScheduler</span><span class="p">(</span><span class="o">**</span><span class="n">init_scheduler_options</span><span class="p">)</span>
+
+<span class="c1"># 启动调度</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</code></pre></div>
+
+<ul>
+<li>我们使用了 <code>AsyncIOExecutor</code> 执行器</li>
+<li>我们使用了 <code>AsyncIOScheduler</code> 调度器</li>
+<li>我们使用 <code>redis</code> 命名了 <code>jobstores</code> 和 <code>executors</code></li>
+</ul>
+<h2 id="_4">准备两个被调函数</h2>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">interval_func</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;普通函数 ==&gt; </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s1"> ==&gt; </span><span class="si">{</span><span class="nb">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">))</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">async_func</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;异步函数 ==&gt; </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s1"> ==&gt; </span><span class="si">{</span><span class="nb">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">))</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>这里我们准备了一个 <code>普通函数</code>和一个<code>异步函数</code>，不出意外的话对于 <code>AsyncIOScheduler</code> 而言可以正常调度这两个方法。</p>
+<h2 id="_5">监听事件</h2>
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">apscheduler.events</span> <span class="kn">import</span> <span class="n">EVENT_JOB_EXECUTED</span>
+
+
+<span class="k">def</span> <span class="nf">job_execute</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    监听事件处理</span>
+<span class="sd">    :param event:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;job执行: job.id =&gt; </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">job_id</span><span class="si">}</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> jobstore =&gt;</span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">jobstore</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># 这就相当于一个钩子方法(程序回调)，这里简单的打印一下信息</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">add_listener</span><span class="p">(</span><span class="n">job_execute</span><span class="p">,</span> <span class="n">EVENT_JOB_EXECUTED</span><span class="p">)</span>
+</code></pre></div>
+
+<h2 id="_6">开启定时任务</h2>
+<div class="codehilite"><pre><span></span><code><span class="n">scheduler</span><span class="o">.</span><span class="n">add_job</span><span class="p">(</span><span class="n">interval_func</span><span class="p">,</span> <span class="s2">&quot;interval&quot;</span><span class="p">,</span>
+                  <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;15s执行一次&quot;</span><span class="p">],</span>  <span class="c1"># 方法参数</span>
+                  <span class="n">seconds</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>  <span class="c1"># 时间间隔</span>
+                  <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;interval_func_test&quot;</span><span class="p">,</span>  <span class="c1"># 指定任务 ID，如果不指定默认 UUID 指</span>
+                  <span class="n">jobstore</span><span class="o">=</span><span class="s2">&quot;redis&quot;</span><span class="p">,</span>  <span class="c1"># 指定工作存储器，前面定义的 Redis，找不到工作存储将报错</span>
+                  <span class="n">executor</span><span class="o">=</span><span class="s2">&quot;redis&quot;</span><span class="p">,</span>  <span class="c1"># 指定执行器，前面定义的 Redis，找不到执行器将报错</span>
+                  <span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>  <span class="c1"># now 开始</span>
+                  <span class="n">end_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">240</span><span class="p">)</span>  <span class="c1"># 结束事件，240 s后结束</span>
+                  <span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;任务启动 ==&gt; 当前时间: </span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># asyncio 启动</span>
+<span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
+</code></pre></div>
+
+<h2 id="_7">总体代码</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">from</span> <span class="nn">apscheduler.events</span> <span class="kn">import</span> <span class="n">EVENT_JOB_EXECUTED</span>
+<span class="kn">from</span> <span class="nn">apscheduler.executors.asyncio</span> <span class="kn">import</span> <span class="n">AsyncIOExecutor</span>
+<span class="kn">from</span> <span class="nn">apscheduler.jobstores.redis</span> <span class="kn">import</span> <span class="n">RedisJobStore</span>  <span class="c1"># 需要安装redis</span>
+<span class="kn">from</span> <span class="nn">apscheduler.schedulers.asyncio</span> <span class="kn">import</span> <span class="n">AsyncIOScheduler</span>
+<span class="kn">from</span> <span class="nn">apscheduler.triggers.interval</span> <span class="kn">import</span> <span class="n">IntervalTrigger</span>
+
+<span class="c1"># 定义 jobstore  使用 redis 存储job信息</span>
+<span class="n">default_redis_jobstore</span> <span class="o">=</span> <span class="n">RedisJobStore</span><span class="p">(</span>
+    <span class="n">db</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">jobs_key</span><span class="o">=</span><span class="s2">&quot;apschedulers.default_jobs&quot;</span><span class="p">,</span>
+    <span class="n">run_times_key</span><span class="o">=</span><span class="s2">&quot;apschedulers.default_run_times&quot;</span><span class="p">,</span>
+    <span class="n">host</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+    <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+
+<span class="c1"># 定义executor 使用asyncio是的调度执行规则</span>
+<span class="n">async_executor</span> <span class="o">=</span> <span class="n">AsyncIOExecutor</span><span class="p">()</span>
+
+<span class="c1"># 初始化scheduler时，可以直接指定jobstore和executor</span>
+<span class="n">init_scheduler_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;jobstores&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;redis&quot;</span><span class="p">:</span> <span class="n">default_redis_jobstore</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;executors&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;redis&quot;</span><span class="p">:</span> <span class="n">async_executor</span>
+    <span class="p">},</span>
+
+    <span class="s2">&quot;job_defaults&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;coalesce&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># 是否合并执行</span>
+        <span class="s1">&#39;max_instances&#39;</span><span class="p">:</span> <span class="mi">8</span>  <span class="c1"># 最大实例数</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1"># 创建scheduler</span>
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">AsyncIOScheduler</span><span class="p">(</span><span class="o">**</span><span class="n">init_scheduler_options</span><span class="p">)</span>
+
+<span class="c1"># 启动调度</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">job_execute</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :param event:</span>
+<span class="sd">    :return:</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;job执行: job.id =&gt; </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">job_id</span><span class="si">}</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> jobstore =&gt;</span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">jobstore</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># 这就相当于一个钩子方法(程序回调)，这里简单的打印一下信息</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">add_listener</span><span class="p">(</span><span class="n">job_execute</span><span class="p">,</span> <span class="n">EVENT_JOB_EXECUTED</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">interval_func</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;普通函数 ==&gt; </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s1"> ==&gt; </span><span class="si">{</span><span class="nb">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">))</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="k">async</span> <span class="k">def</span> <span class="nf">async_func</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;异步函数 ==&gt; </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s1"> ==&gt; </span><span class="si">{</span><span class="nb">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">))</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="n">scheduler</span><span class="o">.</span><span class="n">add_job</span><span class="p">(</span><span class="n">interval_func</span><span class="p">,</span> <span class="s2">&quot;interval&quot;</span><span class="p">,</span>
+                  <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;10s执行一次&quot;</span><span class="p">],</span>
+                  <span class="n">seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                  <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;interval_func_test&quot;</span><span class="p">,</span>
+                  <span class="n">jobstore</span><span class="o">=</span><span class="s2">&quot;redis&quot;</span><span class="p">,</span>
+                  <span class="n">executor</span><span class="o">=</span><span class="s2">&quot;redis&quot;</span><span class="p">,</span>
+                  <span class="n">start_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+                  <span class="n">end_date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">240</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;任务启动 ==&gt; 当前时间: </span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
+</code></pre></div>
+
+<p>控制台结果:</p>
+<div class="codehilite"><pre><span></span><code>任务启动 ==&gt; 当前时间: 2021-05-18 16:19:02
+普通函数 ==&gt; 10s执行一次 ==&gt; 2021-05-18 16:19:12
+job执行: job.id =&gt; interval_func_test      jobstore =&gt;redis
+普通函数 ==&gt; 10s执行一次 ==&gt; 2021-05-18 16:19:22
+job执行: job.id =&gt; interval_func_test      jobstore =&gt;redis
+普通函数 ==&gt; 10s执行一次 ==&gt; 2021-05-18 16:19:32
+job执行: job.id =&gt; interval_func_test      jobstore =&gt;redis
+...
+</code></pre></div>
+
+<p>说明任务被正常调度，如期所料。</p>
+<p>任务信息被存入 <code>Redis</code> 数据库，<code>apschedulers.default_jobs</code> 和 <code>apschedulers.default_run_times</code> 对应着初始化 <code>RedisJobStore</code>
+时传入的 <code>jobs_key</code> 和 <code>run_times_key</code>，在 <code>Redis</code> 中以 <code>hash键</code> 存在</p>
+<div class="codehilite"><pre><span></span><code><span class="n">default_redis_jobstore</span> <span class="o">=</span> <span class="n">RedisJobStore</span><span class="p">(</span>
+    <span class="n">db</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">jobs_key</span><span class="o">=</span><span class="s2">&quot;apschedulers.default_jobs&quot;</span><span class="p">,</span>
+    <span class="n">run_times_key</span><span class="o">=</span><span class="s2">&quot;apschedulers.default_run_times&quot;</span><span class="p">,</span>
+    <span class="n">host</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+    <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+</code></pre></div>
+
+<p><img alt="任务成功redis" src="./images/任务成功redis.png" /></p>
+<p>一旦已定义的 <code>ID</code> 存在于 <code>Redis</code> 中，<code>add_job</code> 方法将会失效并抛出一个<code>异常</code></p>
+<div class="codehilite"><pre><span></span><code>Traceback<span class="w"> </span><span class="o">(</span>most<span class="w"> </span>recent<span class="w"> </span>call<span class="w"> </span>last<span class="o">)</span>:
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;D:\conda3\lib\site-packages\apscheduler\schedulers\base.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">448</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>add_job
+<span class="w">    </span>self._real_add_job<span class="o">(</span>job,<span class="w"> </span>jobstore,<span class="w"> </span>replace_existing<span class="o">)</span>
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;D:\conda3\lib\site-packages\apscheduler\schedulers\base.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">872</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>_real_add_job
+<span class="w">    </span>store.add_job<span class="o">(</span>job<span class="o">)</span>
+<span class="w">  </span>File<span class="w"> </span><span class="s2">&quot;D:\conda3\lib\site-packages\apscheduler\jobstores\redis.py&quot;</span>,<span class="w"> </span>line<span class="w"> </span><span class="m">77</span>,<span class="w"> </span><span class="k">in</span><span class="w"> </span>add_job
+<span class="w">    </span>raise<span class="w"> </span>ConflictingIdError<span class="o">(</span>job.id<span class="o">)</span>
+apscheduler.jobstores.base.ConflictingIdError:<span class="w"> </span><span class="s1">&#39;Job identifier (interval_func_test) conflicts with an existing job&#39;</span>
+</code></pre></div>
+
+<p>报错信息时 <code>job</code> 已存在，也就是说任务 <code>ID</code> 冲突了。这时候要么更换 <code>ID</code>值，要么删除 <code>Redis</code> 中的原有<code>ID</code>后重新设置。</p>
+<p><code>apscheduler</code> 调度器同时提供了 <code>get_job</code> 和 <code>remove_job</code> 方法，参数就是任务 <code>ID</code> 和 <code>jobstore</code></p>
+<div class="codehilite"><pre><span></span><code><span class="k">if</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">get_job</span><span class="p">(</span><span class="n">job_id</span><span class="o">=</span><span class="s2">&quot;interval_func_test&quot;</span><span class="p">,</span> <span class="n">jobstore</span><span class="o">=</span><span class="s2">&quot;redis&quot;</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;key interval_func_test 存在 干掉它&quot;</span><span class="p">)</span>
+    <span class="n">scheduler</span><span class="o">.</span><span class="n">remove_job</span><span class="p">(</span><span class="n">job_id</span><span class="o">=</span><span class="s2">&quot;interval_func_test&quot;</span><span class="p">,</span> <span class="n">jobstore</span><span class="o">=</span><span class="s2">&quot;redis&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>这样每次运行前判断任务是否存在，存在则干掉它，就不会产生冲突了。 真是个小机灵鬼。</p>
+<p>需要注意的是，如果 <code>redis</code>队列中有任务时，当我们重新启动 <code>apscheduler</code> 时，
+<code>apscheduler</code> 会有一个任务消费的机制，详细请下面几个参数。注意另一个<code>hash键</code>记录着任务添加的<code>时间戳</code>。</p>
+<ul>
+<li>
+<p><code>max_instances</code> 最多可以<code>并发</code>多少个<code>实例</code>，可以在初始化调度器的时候设置一个<code>全局默认值</code>，添加任务时可以再单独指定</p>
+</li>
+<li>
+<p><code>coalesce</code> 值为 <code>True</code> 或 <code>False</code>，如果 <code>True</code>，那么下次这个 <code>job</code> 被提交给执行器时，只会执行 <code>1</code> 次，也就是最后这次，如果为 <code>False</code>，那么会执行堆积<code>所有次数</code>（比如某时刻突然断电，再次重启时发现队列中已经堆积了<code>10</code>个任务，那么就会执行 <code>10</code> 次该任务），但是不是绝对的，下面这个参数可能影响它。</p>
+</li>
+<li>
+<p><code>misfire_grace_time</code>：单位为秒，<code>misfire_grace_time</code> 参数则是在线程池有可用线程时会比对该 <code>job</code> 的应调度时间跟当前时间的<code>差值</code>，如果差值<code>小于</code> <code>misfire_grace_time</code> 时，调度器会再次调度该 <code>job</code>；反之该 <code>job</code> 的执行状态为 <code>EVENTJOBMISSED</code> 了，即<code>错过运行</code>。也就是: 给<code>executor</code> 一个<code>容错</code>的<code>超时时间</code>，这个时间范围内要是该跑的<code>还没跑完</code>，就别再跑了。</p>
+</li>
+</ul>
+<blockquote>
+<p><code>coalesce</code> 与 <code>misfire_grace_time</code> 可以在初始化调度器的时候设置一个全局默认值，添加任务时可以再单独指定（即覆盖）</p>
+</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">asyncio</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">from</span> <span class="nn">apscheduler.events</span> <span class="kn">import</span> <span class="n">EVENT_JOB_EXECUTED</span>
+<span class="kn">from</span> <span class="nn">apscheduler.executors.asyncio</span> <span class="kn">import</span> <span class="n">AsyncIOExecutor</span>
+<span class="kn">from</span> <span class="nn">apscheduler.jobstores.redis</span> <span class="kn">import</span> <span class="n">RedisJobStore</span>  <span class="c1"># 需要安装redis</span>
+<span class="kn">from</span> <span class="nn">apscheduler.schedulers.asyncio</span> <span class="kn">import</span> <span class="n">AsyncIOScheduler</span>
+<span class="kn">from</span> <span class="nn">apscheduler.triggers.interval</span> <span class="kn">import</span> <span class="n">IntervalTrigger</span>
+
+<span class="c1"># 定义 jobstore  使用 redis 存储job信息</span>
+<span class="n">default_redis_jobstore</span> <span class="o">=</span> <span class="n">RedisJobStore</span><span class="p">(</span>
+    <span class="n">db</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">jobs_key</span><span class="o">=</span><span class="s2">&quot;apschedulers.default_jobs&quot;</span><span class="p">,</span>
+    <span class="n">run_times_key</span><span class="o">=</span><span class="s2">&quot;apschedulers.default_run_times&quot;</span><span class="p">,</span>
+    <span class="n">host</span><span class="o">=</span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+    <span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="kc">None</span>
+<span class="p">)</span>
+
+<span class="c1"># 定义executor 使用asyncio是的调度执行规则</span>
+<span class="n">async_executor</span> <span class="o">=</span> <span class="n">AsyncIOExecutor</span><span class="p">()</span>
+
+<span class="c1"># 初始化scheduler时，可以直接指定jobstore和executor</span>
+<span class="n">init_scheduler_options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;jobstores&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;redis&quot;</span><span class="p">:</span> <span class="n">default_redis_jobstore</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;executors&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;redis&quot;</span><span class="p">:</span> <span class="n">async_executor</span>
+    <span class="p">},</span>
+
+    <span class="s2">&quot;job_defaults&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;coalesce&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>  <span class="c1"># 是否合并执行</span>
+        <span class="s1">&#39;max_instances&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="c1"># 支持1000个实例并发</span>
+        <span class="s1">&#39;misfire_grace_time&#39;</span><span class="p">:</span> <span class="mi">30</span> <span class="c1"># 30秒的任务超时容错</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="c1"># 创建scheduler</span>
+<span class="n">scheduler</span> <span class="o">=</span> <span class="n">AsyncIOScheduler</span><span class="p">(</span><span class="o">**</span><span class="n">init_scheduler_options</span><span class="p">)</span>
+
+<span class="c1"># 启动调度</span>
+<span class="n">scheduler</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;任务启动 ==&gt; 当前时间: </span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">asyncio</span><span class="o">.</span><span class="n">get_event_loop</span><span class="p">()</span><span class="o">.</span><span class="n">run_forever</span><span class="p">()</span>
+</code></pre></div>
+
+<p>该程序启动后会根据 <strong><code>misfire_grace_time</code></strong> 和 <strong>调度时间跟当前时间的<code>差值</code></strong> 做比较，如果差值大于<code>misfire_grace_time</code> ，则不执行<code>堆积</code>的任务。</p>
+<p>同时会从队列中清除该任务。</p>
+<h2 id="_8">关闭调度器</h2>
+<p><code>scheduler.shutdown()</code></p>
+<p>默认情况下，会关闭 <code>job</code> 存储和执行器，并等待所有正在执行的 <code>job</code> 完成。如果不想等待则可以使用以下方法关闭，也就是<code>强制关闭</code>：</p>
+<p><code>scheduler.shutdown(wait=False)</code></p>
+<h2 id="_9"><code>暂停</code>/<code>恢复</code>调度器</h2>
+<p>暂停调度器：
+<code>scheduler.pause()</code></p>
+<p>恢复调度器：
+<code>scheduler.resume()</code></p>
+<p>启动调度器的时候可以指定 <code>paused=True</code>，以这种方式启动的调度器直接就是<code>暂停</code>状态。</p>
+<p><code>scheduler.start(paused=True)</code></p>
+<h2 id="_10">共享队列</h2>
+<p><code>scheduler</code> 默认不支持共享消息队列(<code>Redis</code>)</p>
+<blockquote>
+<p>以上涉及的代码用例: <a href="https://gitee.com/PY-GZKY/django-fastapi-docs/tree/master/code">https://gitee.com/PY-GZKY/django-fastapi-docs/tree/master/code</a></p>
+<p>参考文章: <a href="https://www.cnblogs.com/leffss/p/11912364.html">https://www.cnblogs.com/leffss/p/11912364.html</a>
+<a href="http://sinhub.cn/2018/11/apscheduler-user-guide/">http://sinhub.cn/2018/11/apscheduler-user-guide/</a></p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      梧桐
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.code.annotate", "content.tabs.link", "navigation.indexes", "navigation.instant", "navigation.sections", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest"], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.8fd75fb4.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js"></script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/sorts/tablesort.number.min.js"></script>
+      
+    
+  </body>
+</html>
