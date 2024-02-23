@@ -33,7 +33,7 @@ docker save app_name:latest | gzip > app_name.tar.gz
 
 这条命令会将`app_name`镜像保存为一个名为`app_name.tar.gz`的压缩文件。
 
-### 部署常用服务
+### Docker容器
 
 #### Redis部署
 
@@ -48,22 +48,15 @@ redis:5.0.3 redis-server /etc/redis.conf
 
 这条命令会以守护进程方式运行Redis容器，使用自定义的配置文件和数据目录，并将容器的6379端口映射到宿主机的6379端口。
 
-### 维护命令
-
-#### 清除所有异常退出的容器
-
 ```shell
 docker ps -a | grep Exited | awk '{print $1}' | xargs docker rm
 ```
-
 这条命令会查找所有状态为Exited的容器，并将它们删除。
 
-#### 清空所有镜像名称为空的镜像
 
 ```shell
 docker images -q --filter "dangling=true" | xargs docker rmi
 ```
-
 这条命令会删除所有未被标记或未被容器使用的镜像，释放空间。
 
 通过上述步骤，你可以使用Docker构建应用的镜像，将其保存和迁移，并运行必要的服务如Redis等。Docker的维护命令也帮助你保持环境的清洁和高效。记得在实际部署前，根据自己的需要调整命令中的参数，如镜像名、容器名、端口映射等。
