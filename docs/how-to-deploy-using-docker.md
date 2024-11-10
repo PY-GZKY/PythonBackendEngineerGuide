@@ -46,6 +46,28 @@ docker run -d --name redis \
 redis:5.0.3 redis-server /etc/redis.conf
 ```
 
+#### MySQL部署
+
+```shell
+docker run -d --name mysql \
+--restart=always \
+-e MYSQL_ROOT_PASSWORD=123456 \
+-e MYSQL_TZ='+8:00' \
+-v /home/server/mysql/datadb:/var/lib/mysql \
+-v /home/server/mysql/mysql.conf.d:/etc/mysql/mysql.conf.d \
+-p 3306:3306 mysql:5.7.30
+```
+
+#### MongoDB部署
+
+```shell
+docker run -d --name mongodb \
+-e MONGO_INITDB_ROOT_USERNAME=admin \
+-e MONGO_INITDB_ROOT_PASSWORD=123456 \
+-v /home/server/mongo/datadb:/data/db \
+-p 27017:27017 mongo:4.4.6
+```
+
 这条命令会以守护进程方式运行Redis容器，使用自定义的配置文件和数据目录，并将容器的6379端口映射到宿主机的6379端口。
 
 ```shell
