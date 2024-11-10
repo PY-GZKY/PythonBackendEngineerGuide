@@ -62,6 +62,7 @@ docker run -d --name mysql \
 
 ```shell
 docker run -d --name mongodb \
+--restart=always \
 -e MONGO_INITDB_ROOT_USERNAME=admin \
 -e MONGO_INITDB_ROOT_PASSWORD=123456 \
 -v /home/server/mongo/datadb:/data/db \
