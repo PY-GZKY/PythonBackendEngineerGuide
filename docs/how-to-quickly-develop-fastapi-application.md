@@ -1,14 +1,9 @@
-# `FastAPI` 框架
-
-![Python](https://img.shields.io/badge/Python-3.9+-blue)
-![FastAPI](https://img.shields.io/badge/FastAPI-latest-green)
+# `FastAPI`
 
 * 在线文档：[https://fastapi.tiangolo.com/](https://fastapi.tiangolo.com/)
 * 项目地址：[https://github.com/tiangolo/fastapi](https://github.com/tiangolo/fastapi)
 
-![logo](https://camo.githubusercontent.com/86d9ca3437f5034da052cf0fd398299292aab0e4479b58c20f2fc37dd8ccbe05/68747470733a2f2f666173746170692e7469616e676f6c6f2e636f6d2f696d672f6c6f676f2d6d617267696e2f6c6f676f2d7465616c2e706e67)
-
-## `FastAPI` 不是银弹
+## `FastAPI` 是不是银弹
 
 首先，`FastAPI` 只是说它能把「功能开发速度提升约 `200%` 至 `300%`」，距离十倍还差了一些，自然不能算是银弹。
 
@@ -30,3 +25,44 @@
 
 从长远看这些大都是一些临时问题，而且 `FastAPI` 作者已经开始全职开发开源项目，这些问题在未来应该都会慢慢得到改善。指出这些是希望更多的人可以客观看待 `FastAPI`
 ，吹捧并不能让一个东西变得更好，参与开发、介绍用法和回答社区提问是比盲目吹捧更有意义的事情。我当然期待 `FastAPI` 能够越来越好，也期待看到有更多优秀的 `Python` 框架出现，但我不喜欢过度炒作、盲目的吹捧和错误的对比。
+
+
+## 如何使用 FastAPI 连接数据库
+
+在 Python Web 后端开发中，如果是关系型数据库交互的话，可以无脑的选择 SQLAlchemy 作为 ORM（对象关系映射）工具。
+
+当然，如果你对 SQL 语句很熟悉，使用 PyMySQL这一类的库也是可以的。
+
+```python
+from typing import Generator
+
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.pool import QueuePool
+
+from app.config import settings
+
+engine = create_engine(settings.SQLALCHEMY_DATABASE_URL, poolclass=QueuePool, pool_pre_ping=True, pool_size=20, pool_recycle=3600)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+
+def get_mysql_db() -> Generator:
+    try:
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
+```
+
+- `SQLALCHEMY_DATABASE_URL` 是数据库的连接地址，可以是 SQLite、MySQL、PostgreSQL 等。
+- `poolclass=QueuePool` 是设置数据库连接池的类型，`QueuePool` 是一种线程安全的连接池。
+- `pool_pre_ping=True` 是设置数据库连接池的预检测，当连接池中的连接在使用前被检测到失效时，会被自动移除。
+- `pool_size=20` 是设置数据库连接池的大小，即最大连接数。
+- `pool_recycle=3600` 是设置数据库连接池的回收时间，即连接在被放回连接池前的最大生存时间。
+- `SessionLocal` 是一个 `sessionmaker` 对象，用于创建数据库会话。
+
+利用 get_mysql_db 生成器函数，可用于获取数据库会话。
+
+> 由于 create_engine 自带了连接池，所以不需要手动关闭数据库连接。
+
+
