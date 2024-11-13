@@ -78,6 +78,7 @@ nav:
 
   - 数据库应用:
       - 如何快速搭建数据库服务: how-to-quickly-deploy-database.md
+      - 如何有效的创建数据库索引: how-to-establish-database-index.md
 
   - FastAPI框架:
       - 如何快速开发 FastAPI 应用: how-to-quickly-develop-fastapi-application.md
