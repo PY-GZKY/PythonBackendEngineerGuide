@@ -241,3 +241,119 @@ find ./ -type d -mtime +15 -exec rm -rf {} \;
 ```
 
 这会清理15天前的目录数据。
+
+
+## 如何将服务添加到 Linux 开机启动项
+
+具体的服务文件在 `/etc/systemd/system/` 目录下，比如你的服务文件是 `my-service.service`，那么你可以使用下面的命令将服务添加到开机启动项：
+
+```shell
+sudo systemctl enable my-service.service
+```
+
+例如有一个 FastAPI 项目需要实现开机自动启动（虽然使用 Docker 会更加方便），main.py 主文件入口可能是这样的：
+
+```python
+# -*- coding: utf-8 -*-
+import uvicorn
+
+from app.utils_app import create_app
+
+app = create_app()
+
+if __name__ == '__main__':
+    uvicorn.run(app='main:app', host="0.0.0.0", port=30002)
+```
+
+再编写一个启动脚本 `start.sh`：
+
+```shell
+#!/bin/bash
+
+# 查找监听在30002端口上的服务的进程ID
+PID=$(lsof -t -i:30002)
+
+# 如果找到了进程，杀死它
+if [ ! -z "$PID" ]; then
+  echo "Stopping existing service running on port 30002 with PID: $PID"
+  kill -9 $PID
+fi
+
+# 等待一小会儿确保进程已经被杀死
+sleep 2
+
+# 在此处设置 ENV_TYPE 环境变量，在 centos 中的环境变量对 systemd 服务不可见
+export ENV_TYPE="prod"
+
+# 启动新的FastAPI服务，sdadmin_py311 是一个 Anaconda 环境
+echo "Starting FastAPI service..."
+cd /data/project/sdadmin && nohup /root/anaconda3/envs/sdadmin_py311/bin/uvicorn main:app --workers 4 --limit-concurrency 1000 --host=0.0.0.0 --port 30002 >> ./server.log 2>&1 &
+
+echo "FastAPI service started with new PID: $!"
+```
+
+这个脚本会先查找是否有监听在 30002 端口上的服务，如果有则杀死它，然后启动新的 FastAPI 服务。
+
+那么如何将这个服务添加到开机启动项呢？首先创建一个服务文件 `start_server.service`：
+
+```shell
+[Unit]
+Description=My Server Start Script
+After=network.target
+
+[Service]
+ExecStart=/data/project/sdadmin/start_server.sh
+Type=forking
+
+[Install]
+WantedBy=multi-user.target
+```
+
+这个启动文件会在网络启动后执行 `/data/project/sdadmin/start_server.sh` 脚本。`Type=forking` 表示这是一个后台服务。
+
+然后使用下面的命令将服务添加到开机启动项：
+```shell
+sudo cp start_server.service /etc/systemd/system/
+sudo systemctl enable start_server.service
+```
+
+确认一下服务是否已经添加到开机启动项：
+```shell
+sudo systemctl is-enabled start_server.service
+```
+
+执行 reload systemd 并启动服务：
+```shell
+sudo systemctl daemon-reload
+sudo systemctl start start_server.service
+```
+
+查看系统服务状态：
+```shell
+sudo systemctl status start_server.service
+```
+
+可以看到服务已经启动了：
+```shell
+● start_server.service - My Server Start Script
+   Loaded: loaded (/etc/systemd/system/start_server.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2024-11-13 17:11:04 CST; 17min ago
+ Main PID: 352685 (start_server.sh)
+    Tasks: 11 (limit: 396646)
+   Memory: 269.4M
+   CGroup: /system.slice/start_server.service
+           ├─352685 /bin/bash /data/project/sdadmin/start_server.sh
+           ├─352686 /root/anaconda3/envs/sdadmin_py311/bin/python /root/anaconda3/envs/sdadmin_py311/bin/uvicorn main:app --workers 4 --limit-concurrency 1000 --host=0.0.0.0 --port 30002
+           ├─352687 /root/anaconda3/envs/sdadmin_py311/bin/python -c from multiprocessing.resource_tracker import main;main(4)
+           ├─352688 /root/anaconda3/envs/sdadmin_py311/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=5, pipe_handle=7) --multiprocessing-fork
+           ├─352689 /root/anaconda3/envs/sdadmin_py311/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=5, pipe_handle=9) --multiprocessing-fork
+           ├─352690 /root/anaconda3/envs/sdadmin_py311/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=5, pipe_handle=11) --multiprocessing-fork
+           └─352691 /root/anaconda3/envs/sdadmin_py311/bin/python -c from multiprocessing.spawn import spawn_main; spawn_main(tracker_fd=5, pipe_handle=13) --multiprocessing-fork
+
+11月 13 17:11:02 iZ8vbaggulwyv5797qfml6Z systemd[1]: Starting My Server Start Script...
+11月 13 17:11:04 iZ8vbaggulwyv5797qfml6Z start_server.sh[352521]: Starting FastAPI service...
+11月 13 17:11:04 iZ8vbaggulwyv5797qfml6Z start_server.sh[352521]: FastAPI service started with new PID: 352685
+11月 13 17:11:04 iZ8vbaggulwyv5797qfml6Z systemd[1]: Started My Server Start Script.
+```
+
+这样就可以实现开机自动启动 FastAPI 服务了。
