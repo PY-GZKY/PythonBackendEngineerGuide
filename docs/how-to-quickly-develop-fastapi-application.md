@@ -1,4 +1,4 @@
-# 如何快速开发 FastAPI 应用
+# 如何快速开发 `FastAPI` 应用
 
 * 在线文档：[https://fastapi.tiangolo.com/](https://fastapi.tiangolo.com/)
 * 项目地址：[https://github.com/tiangolo/fastapi](https://github.com/tiangolo/fastapi)
