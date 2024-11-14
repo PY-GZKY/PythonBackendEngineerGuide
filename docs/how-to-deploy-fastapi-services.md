@@ -1,4 +1,4 @@
-# 快速部署
+# 快速部署 FastAPI 服务
 
 ## 如速部署 `FastAPI` 服务
 
@@ -21,7 +21,7 @@
 pip install uvicorn
 ```
 
-### 构建一个简单的应用程序
+## 构建一个简单的应用程序
 
 > 新建一个 main.py 文件并编写一下代码
 
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     uvicorn.run(app='main:app', host="0.0.0.0", port=8000,reload=True, debug=True)
 ```
 
-### 后台启动 `uvicorn`
+## 后台启动 `uvicorn`
 
 在线上部署的时候，我们需要将 `web服务`永久的在后台运行，可以使用:
 
@@ -105,7 +105,7 @@ root  3855  6709  0 11:27 pts/1    00:00:00 grep --color=auto 8006
 INFO:     113.66.254.2:54315 - "POST /api/v1/erp3c_delivery_16h/1f11b32dec39262e84df HTTP/1.1" 200 OK
 ```
 
-## `Uvicorn` + `Nginx`
+## 如何使用 `Uvicorn` + `Nginx` 部署应用
 
 如果是`单机/单服务器`应用的话，通过上面的部署之后项目已经完美启动。
 
@@ -171,7 +171,7 @@ nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
 
 需要注意的是如果我们使用 `https://IP ` 访问项目会出现 `无法访问此网站` 的情况，原因是我们并没有做 https 配置和重定向，这需要一些 ssl 证书的支持，这个不做详述。
 
-## `Uvicorn` + `Nginx` + `Docker`
+## 如何使用 `Docker` 进行部署
 
 > `Docker` 是一个开源的应用容器引擎，基于 `Go` 语言 并遵从 `Apache2.0 `协议开源。
 > `Docker` 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 `Linux` 机器上，也可以实现虚拟化。
@@ -181,13 +181,13 @@ nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
 
 假设我们的工程目录 `code`，请在 `code` 下:
 
-### 生成 `requirements.txt` 文件
+1. 生成 `requirements.txt` 文件
 
 ```shell
 pip freeze > requirements.txt
 ```
 
-### `Nginx` 配置文件
+2. `Nginx` 配置文件
 
 在 `code/config/nginx` 下新建 `web_app.conf` 文件并写入以下配置
 
@@ -212,7 +212,7 @@ server {
 }
 ```
 
-### 构建 `Dockerfile` 文件
+3. 构建 `Dockerfile` 文件
 
 ```shell
 # 基于 Py3.8 构建
@@ -242,7 +242,7 @@ ADD . /code/
 
 `docker` 本质上是`Linux`操作系统上的一个进程，但又是一个独立的环境，容器间相互隔离，同样具有 `Unix` 内核。
 
-### 安装 `Docker-compose`
+### 使用 `Docker-compose`
 
 既然我们已经在本地安装了 `Python`版本，可以使用 `pip` 安装 `Docker-compose`
 
@@ -250,16 +250,12 @@ ADD . /code/
 pip install Docker-compose
 ```
 
-> 安装后即刻生效
-
-验证是否正常工作:
+安装后即刻生效，验证是否正常工作:
 
 ```shell
 [root@gzky_gz conf]# Docker-compose -v
 Docker-compose version 1.28.6
 ```
-
-> 没有问题 ！！
 
 ### 构建 `docker-compose.yml` 文件
 
@@ -311,7 +307,7 @@ Docker-compose up
 
 容器启动成功后，通过 `http://IP` 地址访问项目，实际效果和本地宿主机部署一样。
 
-## `FastAPI` +  `Vue` + `Nginx` + `Docker`
+## 如何集成 `Vue` 项目
 
 用官方的话说，`Vue` 是一套用于构建用户界面的渐进式框架。 与其它大型框架不同的是，`Vue` 被设计为可以自底向上逐层应用。
 
@@ -338,7 +334,7 @@ npm run build
 
 而至于`fastapi`的后端接口则可以存在于任何一台有`公网ip`的机器，前端项目只需要改动`ip` 即可。
 
-### `Nginx`部署`Vue`项目
+## 如何使用 `Nginx`部署`Vue`项目
 
 在 `nginx.conf`中编辑以下配置
 
@@ -356,15 +352,15 @@ server {
 
 让 `Nginx` 找到 `/code/dist` 目录并将目录下的`index.html` 作为`Nginx`首页，`纯静态部署`总是如此的简单 ！！
 
-### 部署多个`Vue`项目
+## 如何部署多个`Vue`项目
 
 虽然一个`Nginx`也能够部署多个 `Vue`项目，但是我还是不建议这样的做法，一旦`Vue`项目体量过大，调度的接口过多，则会发生性能不足的情况。
 可以使用搭建多个`Nginx` 服务器来挂载多个`Vue`项目(或其他前端项目)，一个`Nginx`对应一个`Vue`项目。
 而理论上，只要我们的机器的`cpu`和`内存`足够，可以搭建很多很多的`Nginx`，只需改变其默认端口即可。
 
-## acme.sh
+## 如何使用 acme.sh 部署 SSL 证书
 
-### 安装
+### 安装 acme.sh
 
 安装很简单，就一个命令：
 
@@ -376,7 +372,7 @@ curl https://get.acme.sh | sh
 
 理论上会自动添加一个 acme.sh 别名，但有时候并不会生成，需要手动执行以下命令： `source ~/.bashrc`
 
-### 使用dns api的模式进行证书申请
+### 使用 dns api 的模式进行证书申请
 
 获取 AccessKey ID和AccessKey Secret
 
@@ -395,7 +391,6 @@ export Ali_Secret="key Secret"
 ```
 
 .key 和 .crt证书可用于 nginx 证书部署.
-
 
 > 参考: https://github.com/acmesh-official/acme.sh
 
