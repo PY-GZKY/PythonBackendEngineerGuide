@@ -61,7 +61,7 @@ INFO: Waiting for application startup.
 INFO: Application startup complete.
 ```
 
-在开发过程中，我们想知道代码被改变时接口或页面上实时的同步更改，指定 `--reload `参数为 `True` 可以解决这个问题，也叫热加载 ！！
+在开发过程中，我们想知道代码被改变时接口或页面上实时的同步更改，指定 `--reload `参数为 `True` 可以解决这个问题，也叫热加载。
 
 ```shell
 if __name__ == "__main__":
@@ -107,15 +107,15 @@ INFO:     113.66.254.2:54315 - "POST /api/v1/erp3c_delivery_16h/1f11b32dec39262e
 
 如果是`单机/单服务器`应用的话，通过上面的部署之后项目已经完美启动。
 
-但是我们总是热衷于使用 `Nginx` 来反向代理我们的`web 服务`，`Nginx` 似乎能够让我们的网站更像一个网站 ！！
+但是我们总是热衷于使用 `Nginx` 来反向代理我们的`web 服务`，`Nginx` 似乎能够让我们的网站更像一个网站。
 
 更重要的方面是 `Nginx` 确实是一款高效实用的`反向代理服务器`，安装简单，配置容易，支持负载均衡，确为线上部署的一把利器，受到广泛开发者的青睐也在情理之中了。
 
-> 接下来我们要构建  `Uvicorn` + `Nginx` 这套组合，并让这套组合拳有效的运行于我们的服务器中 ！！
+> 接下来我们要构建  `Uvicorn` + `Nginx` 这套组合，并让这套组合拳有效的运行于我们的服务器中。
 
 `Nginx` 的可配置项非常多，我们这里不做过多的详述，毕竟篇幅不小。
 
-这里假设已经成功搭建并启动了 `Nginx` 反向代理服务器，如果未启动则通过文档中的命令重启即可！！
+这里假设已经成功搭建并启动了 `Nginx` 反向代理服务器，如果未启动则通过文档中的命令重启即可。
 
 查看 `Nginx` 安装的所在目录：
 
@@ -159,7 +159,7 @@ nginx: the configuration file /usr/local/nginx/conf/nginx.conf syntax is ok
 nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
 ```
 
-出现以上信息则说明配置文件无误，否则根据报错行数修正配置文件即可 ！！
+出现以上信息则说明配置文件无误，否则根据报错行数修正配置文件即可。
 
 > 只要确保 `:8080` 服务正常和`Nginx 配置`文件无异常，项目将顺利启动。
 
@@ -173,9 +173,9 @@ nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
 
 > `Docker` 是一个开源的应用容器引擎，基于 `Go` 语言 并遵从 `Apache2.0 `协议开源。
 > `Docker` 可以让开发者打包他们的应用以及依赖包到一个轻量级、可移植的容器中，然后发布到任何流行的 `Linux` 机器上，也可以实现虚拟化。
-> 号称`远程小型虚拟机`，但是更轻更快 ！！
+> 号称`远程小型虚拟机`，但是更轻更快 ！
 
-当你应对不同的语言版本、不同的框架版本而举足无措的时候，`docker` 可能成为你的第一选择 ！！
+当你应对不同的语言版本、不同的框架版本而举足无措的时候，`docker` 可能成为你的第一选择。
 
 假设我们的工程目录 `code`，请在 `code` 下:
 
@@ -337,7 +337,7 @@ server {
 }
 ```
 
-让 `Nginx` 找到 `/code/dist` 目录并将目录下的`index.html` 作为`Nginx`首页，`纯静态部署`总是如此的简单 ！！
+让 `Nginx` 找到 `/code/dist` 目录并将目录下的`index.html` 作为`Nginx`首页，`纯静态部署`总是如此的简单。
 
 ## 如何部署多个`Vue`项目?
 
