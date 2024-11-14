@@ -21,7 +21,7 @@
 pip install uvicorn
 ```
 
-## 构建一个简单的应用程序
+## 如何构建一个简单的应用程序
 
 > 新建一个 main.py 文件并编写一下代码
 
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     uvicorn.run(app='main:app', host="0.0.0.0", port=8000,reload=True, debug=True)
 ```
 
-## 后台启动 `uvicorn`
+## 如何启动 `uvicorn`
 
 在线上部署的时候，我们需要将 `web服务`永久的在后台运行，可以使用:
 
