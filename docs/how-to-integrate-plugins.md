@@ -1,25 +1,24 @@
 # 如何为 `FastAPI` 集成插件
 
+## 如何使用 supervisor 管理 FastAPI 服务
 
-## supervisor
-
+安装 supervisor：
 
 ```shell
 yum install Supervisor
 ```
 
-进入` cd /etc/supervisor` 目录 找到 `supervisord.conf` 配置文件 和
-`supervisord.d` 文件夹，编辑s`upervisord.conf`文件（默认在 `/etc/supervisor/supervisord.conf`）
+- 进入` cd /etc/supervisor` 目录 找到 `supervisord.conf` 配置文件 和 `supervisord.d` 文件夹
+- 编辑`supervisord.conf`文件（默认在 `/etc/supervisor/supervisord.conf`）
+- `files = supervisord.d/*.ini` 这句代码说明它会加载`supervisord.d`文件夹中的所有`.ini`配置文件
 
-`files = supervisord.d/*.ini` 这句代码说明它会加载`supervisord.d`文件夹中的所有`.ini`配置文件
-
-#### Start
+### 开启 supervisor 服务
 
 ```shell
 supervisord -c /etc/supervisor/supervisord.conf
 ```
 
-#### Start 某一个应用
+### Start 某一个应用
 
 ```shell
 # 重启supervisor
@@ -81,22 +80,22 @@ curl --request GET -sL \
 
 > PS: supervisord 依赖于 Python2, 但是 supervisor 客户端库可以用 pip3 安装
 
-## 报错答疑
+## 如何解决 supervisor 启动报错问题？
 
-#### A：Starting supervisor: Unlinking stale socket /var/run/supervisor.sock
+### A：Starting supervisor: Unlinking stale socket /var/run/supervisor.sock
 
 ```shell
 find / -name supervisor.sock
 unlink /***/supervisor.sock
 ```
 
-#### B：CentOS7：【error】Failed to start firewalld.service: Unit firewalld.service is masked
+### B：CentOS7：【error】Failed to start firewalld.service: Unit firewalld.service is masked
 
 ```shell
 systemctl unmask firewalld.service
 ```
 
-#### C: firewall-cmd
+### C: firewall-cmd
 
 ```shell
 # firewall-cmd --zone=public --add-port=80/tcp --permanent    
@@ -137,7 +136,7 @@ systemctl disable firewalld.service
 systemctl status firewalld
 ```
 
-#### 基本配置项说明
+### 基本配置项说明
 
 ```shell
 [unix_http_server]：这部分设置HTTP服务器监听的UNIX domain socket
@@ -184,26 +183,24 @@ stderr_logfile=/Library/WebServer/Documents/capital/backend/runtime/logs/supervi
 stderr_logfile_maxbytes=10MB
 ```
 
+## 如何使用 Apscheduler 进行任务调度?
 
+`Apscheduler` 可能是作为 `fastapi` 任务队列比较理想的选择，毕竟 `Celery` 有点大，而且 `Celery` 本身就是一个独立的服务，`Apscheduler` 可以直接集成到 `fastapi` 项目中。
 
-## Apscheduler
+[https://apscheduler.readthedocs.io/en/stable/userguide.html](https://apscheduler.readthedocs.io/en/stable/userguide.html)
 
-`Apscheduler` 可能是作为 `fastapi` 任务队列比较理想的选择，毕竟 `Celery` 对于`fastapi` 框架而言难免过重。
-
-> `apscheduler`: [https://apscheduler.readthedocs.io/en/stable/userguide.html](https://apscheduler.readthedocs.io/en/stable/userguide.html)
-
-```python
+```shell
 $ pip install apscheduler
 ```
 
-## `APScheduler` 组件：
+### `APScheduler` 组件：
 
 - `触发对象`(声明要触发的类型以及参数)
 - `JOB存储`(`Redis、MongoDB`)
 - `执行器`(`AsyncIOExecutor`)
 - `调度器`(`BackgroundScheduler、AsyncIOScheduler` )
 
-## `Apscheduler` 模块
+### `Apscheduler` 模块
 
 - `BlockingScheduler`：当调度程序是您的流程中唯一运行的东西时使用
 - `BackgroundScheduler`：在不使用以下任何框架且希望调度程序在应用程序内部的后台运行时使用
@@ -222,13 +219,13 @@ $ pip install apscheduler
 
 `TwistedScheduler` 调度器可用于 `Scrapy` 框架等基于`Twisted` 的应用程序。
 
-## `Apscheduler` 触发器类型
+### `Apscheduler` 触发器类型
 
 - `date`：在您希望在特定时间点仅运行`一次`作业时使用
 - `interval`：在您要以固定的`时间间隔`运行作业时使用
 - `cron`：当您想在一天中的特定时间`定期`运行作业时使用
 
-## `Apscheduler` 持久化
+### `Apscheduler` 持久化
 
 为了项目或者程序异常重启和查看最近的任务队列信息，我们应该使用持久化存储 `Apscheduler` 的任务信息，这里以 Redis 为例。
 
@@ -282,7 +279,7 @@ scheduler.start()
 - 我们使用了 `AsyncIOScheduler` 调度器
 - 我们使用 `redis` 命名了 `jobstores` 和 `executors`
 
-## 准备两个被调函数
+### 准备两个被调函数
 
 ```python
 def interval_func(message):
@@ -295,7 +292,7 @@ async def async_func(message):
 
 这里我们准备了一个 `普通函数`和一个`异步函数`，不出意外的话对于 `AsyncIOScheduler` 而言可以正常调度这两个方法。
 
-## 监听事件
+### 监听事件
 
 ```python
 from apscheduler.events import EVENT_JOB_EXECUTED
@@ -314,7 +311,7 @@ def job_execute(event):
 scheduler.add_listener(job_execute, EVENT_JOB_EXECUTED)
 ```
 
-## 开启定时任务
+### 开启定时任务
 
 ```python
 scheduler.add_job(interval_func, "interval",
@@ -333,7 +330,7 @@ print(f'任务启动 ==> 当前时间: {datetime.datetime.now().strftime("%Y-%m-
 asyncio.get_event_loop().run_forever()
 ```
 
-## 总体代码
+### 完整代码示例
 
 ```python
 # -*- coding: utf-8 -*-
@@ -461,7 +458,7 @@ apscheduler.jobstores.base.ConflictingIdError: 'Job identifier (interval_func_te
 
 报错信息时 `job` 已存在，也就是说任务 `ID` 冲突了。这时候要么更换 `ID`值，要么删除 `Redis` 中的原有`ID`后重新设置。
 
-`apscheduler` 调度器同时提供了 `get_job` 和 `remove_job` 方法，参数就是任务 `ID` 和 `jobstore`
+`apscheduler` 调度器同时提供了 `get_job` 和 `remove_job` 方法，参数就是任务 `ID` 和 `jobstore`。
 
 ```python
 if scheduler.get_job(job_id="interval_func_test", jobstore="redis"):
@@ -475,12 +472,10 @@ if scheduler.get_job(job_id="interval_func_test", jobstore="redis"):
 `apscheduler` 会有一个任务消费的机制，详细请下面几个参数。注意另一个`hash键`记录着任务添加的`时间戳`。
 
 - `max_instances` 最多可以`并发`多少个`实例`，可以在初始化调度器的时候设置一个`全局默认值`，添加任务时可以再单独指定
-  
 - `coalesce` 值为 `True` 或 `False`，如果 `True`，那么下次这个 `job` 被提交给执行器时，只会执行 `1` 次，也就是最后这次，如果为 `False`，那么会执行堆积`所有次数`（比如某时刻突然断电，再次重启时发现队列中已经堆积了`10`个任务，那么就会执行 `10` 次该任务），但是不是绝对的，下面这个参数可能影响它。
-
 - `misfire_grace_time`：单位为秒，`misfire_grace_time` 参数则是在线程池有可用线程时会比对该 `job` 的应调度时间跟当前时间的`差值`，如果差值`小于` `misfire_grace_time` 时，调度器会再次调度该 `job`；反之该 `job` 的执行状态为 `EVENTJOBMISSED` 了，即`错过运行`。也就是: 给`executor` 一个`容错`的`超时时间`，这个时间范围内要是该跑的`还没跑完`，就别再跑了。
 
-> `coalesce` 与 `misfire_grace_time` 可以在初始化调度器的时候设置一个全局默认值，添加任务时可以再单独指定（即覆盖）
+`coalesce` 与 `misfire_grace_time` 可以在初始化调度器的时候设置一个全局默认值，添加任务时可以再单独指定（即覆盖）。
 
 
 ```python
@@ -536,7 +531,7 @@ asyncio.get_event_loop().run_forever()
 
 同时会从队列中清除该任务。
 
-## 关闭调度器
+### 关闭调度器
 
 `scheduler.shutdown()`
 
@@ -544,7 +539,7 @@ asyncio.get_event_loop().run_forever()
 
 `scheduler.shutdown(wait=False)`
 
-## `暂停`/`恢复`调度器
+### `暂停`/`恢复`调度器
 
 暂停调度器：
 `scheduler.pause()`
@@ -556,11 +551,3 @@ asyncio.get_event_loop().run_forever()
 
 `scheduler.start(paused=True)`
 
-## 共享队列
-`scheduler` 默认不支持共享消息队列(`Redis`)
-
-
-> 以上涉及的代码用例: [https://gitee.com/PY-GZKY/django-fastapi-docs/tree/master/code](https://gitee.com/PY-GZKY/django-fastapi-docs/tree/master/code)
-
-> 参考文章: [https://www.cnblogs.com/leffss/p/11912364.html](https://www.cnblogs.com/leffss/p/11912364.html)
-[http://sinhub.cn/2018/11/apscheduler-user-guide/](http://sinhub.cn/2018/11/apscheduler-user-guide/)
