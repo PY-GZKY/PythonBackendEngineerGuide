@@ -1,8 +1,6 @@
-# 快速部署 FastAPI 服务
+# 如何快速部署 `FastAPI` 服务?
 
-## 如速部署 `FastAPI` 服务?
-
-`fastapi` 官方推荐使用 `uvicron` 服务器来部署其服务
+`fastapi` 官方推荐使用 `uvicron` 服务器来部署其服务。
 
 `uvicorn` 是一款轻量快速的 `Python ASGI `框架(异步框架)，基于`uvloop`和`httptools`构建。
 
@@ -15,7 +13,7 @@
 由于 `Uvicron` 的诞生，以及 `fastapi` 本身支持高性能的异步请求，在 `Python` 轻量级框架中有着质的飞跃。
 这也是 `fastapi` 近来大火的原因，某些程度上更好的替代了 `flask` 的江湖地位。
 
-### 安装 `Uvicron`?
+### 安装 `Uvicron`
 
 ```shell
 pip install uvicorn
