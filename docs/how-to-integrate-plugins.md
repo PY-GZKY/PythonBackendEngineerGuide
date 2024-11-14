@@ -71,14 +71,7 @@ firewall-cmd --add-port=9001/tcp
 firewall-cmd --reload                 
 ```
 
-#### 问题不大
-
-```shell
-curl --request GET -sL \
-     --url 'http://127.0.0.1:9001'
-```
-
-> PS: supervisord 依赖于 Python2, 但是 supervisor 客户端库可以用 pip3 安装
+supervisord 依赖于 Python2, 但是 supervisor 客户端库可以用 pip3 安装。
 
 ## 如何解决 supervisor 启动报错问题？
 
