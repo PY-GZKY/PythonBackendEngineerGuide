@@ -1,19 +1,20 @@
 # 如何使用 Docker 部署
 
-## Docker应用
+## 什么是 Docker 应用?
 
-使用Docker部署应用是当今开发和运维领域的一种流行做法，它不仅提高了开发和部署的效率，还通过容器化技术保证了应用的可移植性和安全性。以下是一个更详细的指南，帮助你使用Docker进行应用部署。
+使用Docker部署应用是当今开发和运维领域的一种流行做法，它不仅提高了开发和部署的效率，还通过容器化技术保证了应用的可移植性和安全性。
+以下是一个更详细的指南，帮助你使用Docker进行应用部署。
 
-### Docker优势
+## Docker 有什么优势?
 
 - **灵活性**：Docker可以将应用及其依赖打包成一个镜像，无论应用环境多么复杂，都可以轻松管理和迁移。
 - **便携性**：镜像一旦被打包，可以在任何支持Docker的环境中运行，确保了一致的运行效果。
 - **高效性**：容器直接运行在宿主机的操作系统内核上，不需要额外的虚拟化开销，提高了资源利用率。
 - **安全性**：容器之间相互隔离，即使一个容器崩溃，也不会影响到其他容器。
 
-### Docker镜像
+## 如何构建 Docker 镜像
 
-#### 1. 构建Docker镜像
+### 1. 构建Docker镜像
 
 首先，需要有一个`Dockerfile`，它是一个文本文件，包含了构建Docker镜像所需的指令和步骤。
 
@@ -23,7 +24,7 @@ docker build -t app_name -f Dockerfile .
 
 这条命令会根据当前目录下的`Dockerfile`文件内容，构建一个名为`app_name`的Docker镜像。
 
-#### 2. 保存镜像为文件
+### 2. 保存镜像为文件（可选）
 
 构建完成后，可以将Docker镜像保存为文件，方便迁移和备份。
 
@@ -33,9 +34,9 @@ docker save app_name:latest | gzip > app_name.tar.gz
 
 这条命令会将`app_name`镜像保存为一个名为`app_name.tar.gz`的压缩文件。
 
-### Docker容器
+## 如何启动 Docker 容器?
 
-#### Redis部署
+### Redis部署
 
 ```shell
 docker run -d --name redis \
@@ -46,7 +47,7 @@ docker run -d --name redis \
 redis:5.0.3 redis-server /etc/redis.conf
 ```
 
-#### MySQL部署
+### MySQL部署
 
 ```shell
 docker run -d --name mysql \
@@ -58,7 +59,7 @@ docker run -d --name mysql \
 -p 3306:3306 mysql:5.7.30
 ```
 
-#### MongoDB部署
+### MongoDB部署
 
 ```shell
 docker run -d --name mongodb \
@@ -76,18 +77,18 @@ docker ps -a | grep Exited | awk '{print $1}' | xargs docker rm
 ```
 这条命令会查找所有状态为Exited的容器，并将它们删除。
 
-
 ```shell
 docker images -q --filter "dangling=true" | xargs docker rmi
 ```
 这条命令会删除所有未被标记或未被容器使用的镜像，释放空间。
 
-通过上述步骤，你可以使用Docker构建应用的镜像，将其保存和迁移，并运行必要的服务如Redis等。Docker的维护命令也帮助你保持环境的清洁和高效。记得在实际部署前，根据自己的需要调整命令中的参数，如镜像名、容器名、端口映射等。
+通过上述步骤，你可以使用Docker构建应用的镜像，将其保存和迁移，并运行必要的服务如Redis等。
 
-## Portainer 可视化管理
+Docker的维护命令也帮助你保持环境的清洁和高效。记得在实际部署前，根据自己的需要调整命令中的参数，如镜像名、容器名、端口映射等。
 
-Portainer
-是一款开源的轻量级管理工具，旨在帮助用户通过Web用户界面轻松管理Docker或Kubernetes环境。它的直观界面使得即使是Docker和Kubernetes的新手也能快速上手，同时也为高级用户提供了强大的功能。下面是如何安装和使用Portainer进行Docker环境管理的详细指南。
+## 如何搭建 Docker 可视化管理?
+
+Portainer 是一款开源的轻量级管理工具，旨在帮助用户通过Web用户界面轻松管理Docker或Kubernetes环境。它的直观界面使得即使是Docker和Kubernetes的新手也能快速上手，同时也为高级用户提供了强大的功能。下面是如何安装和使用Portainer进行Docker环境管理的详细指南。
 
 ### Portainer 的特点
 
@@ -131,7 +132,7 @@ Swarm或Kubernetes环境中。通过这些功能，Portainer成为了一个非�
 
 ## Harbor 访问控制
 
-什么是Harbor？
+什么是 Harbor？
 
 Harbor 是一个先进的企业级容器镜像仓库（Registry），它为存储、签名和扫描容器镜像提供了丰富的功能，确保容器化应用的安全性和一致性。作为一个由中国网易公司捐赠给Cloud
 Native Computing Foundation（CNCF）并已毕业的项目，Harbor 在全球范围内被广泛认可和使用，特别是在需要严格遵守数据治理和安全性要求的企业环境中。
@@ -148,7 +149,7 @@ Native Computing Foundation（CNCF）并已毕业的项目，Harbor 在全球范
 
 5. **高可用性和多租户**：Harbor 设计考虑到了企业级的高可用性和多租户需求，支持横向扩展以适应高负载，同时通过项目来实现资源隔离，满足多团队或多项目的管理需求。
 
-### 为什么选择 Harbor 而不是 DockerHub
+### 为什么选择 Harbor 而不是 DockerHub?
 
 尽管 DockerHub 是最流行的公共容器镜像仓库，提供了大量的社区镜像资源，但对于企业用户来说，选择 Harbor 作为私有或内部镜像仓库有以下几个理由：
 
