@@ -23,7 +23,7 @@ pip install uvicorn
 
 ## 如何构建一个简单的应用程序?
 
-> 新建一个 main.py 文件并编写一下代码
+新建一个 main.py 文件并编写代码：
 
 ```python
 import uvicorn
@@ -411,6 +411,8 @@ Let's 的证书有效期为60天
 如果你不想手动升级, 可以开启自动升级: `acme.sh --upgrade --auto-upgrade` 之后, acme.sh 就会自动保持更新了.
 
 你也可以随时关闭自动更新: `acme.sh --upgrade --auto-upgrade 0`
+
+
 
 
 
