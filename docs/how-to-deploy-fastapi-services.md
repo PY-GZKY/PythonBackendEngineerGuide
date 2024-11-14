@@ -39,9 +39,9 @@ if __name__ == "__main__":
     uvicorn.run(app, host='127.0.0.1', port=8000, debug=True)
 ```
 
-可以看到 `fastapi` 的语法和 `flask`非常接近，不管是从设计模式还是感官上来说都有着异曲同工之妙 ！！
+可以看到 `fastapi` 的语法和 `flask`非常接近，不管是从设计模式还是感官上来说都有着异曲同工之妙。
 
-我们通过:
+运行 `main.py` 文件：
 
 ````shell
 python main.py
