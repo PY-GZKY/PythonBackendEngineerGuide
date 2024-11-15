@@ -10,7 +10,7 @@
 $ pip install apscheduler
 ```
 
-### `APScheduler` 组件：
+### `APScheduler` 组件
 
 - `触发对象`(声明要触发的类型以及参数)
 - `JOB存储`(`Redis、MongoDB`)
@@ -257,8 +257,6 @@ default_redis_jobstore = RedisJobStore(
     password=None
 )
 ```
-
-![任务成功redis](./images/任务成功redis.png)
 
 一旦已定义的 `ID` 存在于 `Redis` 中，`add_job` 方法将会失效并抛出一个`异常`
 
