@@ -362,7 +362,4 @@ asyncio.get_event_loop().run_forever()
 恢复调度器：
 `scheduler.resume()`
 
-启动调度器的时候可以指定 `paused=True`，以这种方式启动的调度器直接就是`暂停`状态。
-
-`scheduler.start(paused=True)`
 
