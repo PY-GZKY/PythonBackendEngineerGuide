@@ -17,7 +17,7 @@
 ssh wutong@hostname
 ```
 
-## 系统换源
+## 如何进行系统换源?
 
 如果你的服务器来自 阿里云或者腾讯云，那自然是不用换源了。这些运营商会帮你配好。
 
@@ -49,13 +49,11 @@ sudo apt update
 
 > 这是 https://mirrors.bfsu.edu.cn 中国清华镜像源，如果你不知道其他的更好的源，那就用这个就行了。
 
-## 配置 Python 环境
+## 如何配置 Anaconda Python 环境?
 
 Anaconda 官方下载页面：https://www.anaconda.com/downloads
 
-你只需要下载对应系统的安装包，然后直接运行安装包即可
-
-如果遇到网络问题，可以使用清华大学的镜像，如
+你只需要下载对应系统的安装包，然后直接运行安装包即可。如果遇到网络问题，可以使用清华大学的镜像，如
 
 ```shell
 wget https://mirrors.bfsu.edu.cn/anaconda/miniconda/Miniconda3-py310_23.3.1-0-Linux-x86_64.sh
@@ -79,7 +77,7 @@ sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O 
 ~/miniconda3/bin/conda init zsh
 ```
 
-## 设置免密ssh登录服务器
+## 如何设置免密ssh登录服务器?
 
 首先进入本地电脑当前用户的.ssh文件夹中，再打开id_rsa.pub文件并复制其中所有内容
 
@@ -112,7 +110,7 @@ nano ~/.ssh/authorized_keys
 sudo reboot
 ```
 
-## 如何把装好的环境copy到另一台机器上
+## 如何把装好的环境copy到另一台机器上?
 
 1.ssh连上服务器
 
@@ -130,13 +128,13 @@ rsync -avp /data/wutong/miniconda3 eight2.local:/data/wutong/
 
 这样就把一台服务器的Python环境直接拷贝到另一台服务器上了，可直接使用。
 
-## 如何查看一台服务器当前有多少个SSH连接数
+## 如何查看一台服务器当前有多少个SSH连接数?
 
 ```shell
 who | grep -i pts | wc -l
 ```
 
-## 安装Docker
+## 如何安装 Docker?
 
 1. 首先apt安装相关依赖包：
 
@@ -234,7 +232,7 @@ sudo systemctl enable docker
 
 这样每次开机就会自启动docker服务.
 
-## 定时清理目录数据
+## 如何定时清理指定的目录数据?
 
 ```shell
 find ./ -type d -mtime +15 -exec rm -rf {} \;
@@ -243,7 +241,7 @@ find ./ -type d -mtime +15 -exec rm -rf {} \;
 这会清理15天前的目录数据。
 
 
-## 如何将服务添加到 Linux 开机启动项
+## 如何将服务添加到 Linux 开机启动项?
 
 具体的服务文件在 `/etc/systemd/system/` 目录下，比如你的服务文件是 `my-service.service`，那么你可以使用下面的命令将服务添加到开机启动项：
 
