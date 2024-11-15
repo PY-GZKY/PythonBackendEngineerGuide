@@ -3,7 +3,7 @@
 * 在线文档：[https://fastapi.tiangolo.com/](https://fastapi.tiangolo.com/)
 * 项目地址：[https://github.com/tiangolo/fastapi](https://github.com/tiangolo/fastapi)
 
-## `FastAPI` 是不是银弹
+## `FastAPI` 是不是银弹?
 
 首先，`FastAPI` 只是说它能把「功能开发速度提升约 `200%` 至 `300%`」，距离十倍还差了一些，自然不能算是银弹。
 
