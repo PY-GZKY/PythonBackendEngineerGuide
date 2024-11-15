@@ -31,7 +31,6 @@ docker build -t app_name -f Dockerfile .
 ```shell
 docker save app_name:latest | gzip > app_name.tar.gz
 ```
-
 这条命令会将`app_name`镜像保存为一个名为`app_name.tar.gz`的压缩文件。
 
 ## 如何启动 Docker 容器?
@@ -72,6 +71,8 @@ docker run -d --name mongodb \
 
 这条命令会以守护进程方式运行Redis容器，使用自定义的配置文件和数据目录，并将容器的6379端口映射到宿主机的6379端口。
 
+## 如何删除或清理 Docker 容器?
+
 ```shell
 docker ps -a | grep Exited | awk '{print $1}' | xargs docker rm
 ```
@@ -82,9 +83,7 @@ docker images -q --filter "dangling=true" | xargs docker rmi
 ```
 这条命令会删除所有未被标记或未被容器使用的镜像，释放空间。
 
-通过上述步骤，你可以使用Docker构建应用的镜像，将其保存和迁移，并运行必要的服务如Redis等。
-
-Docker的维护命令也帮助你保持环境的清洁和高效。记得在实际部署前，根据自己的需要调整命令中的参数，如镜像名、容器名、端口映射等。
+Docker的维护命令可以帮助你保持环境的清洁和高效。记得在实际部署前，根据自己的需要调整命令中的参数，如镜像名、容器名、端口映射等。
 
 ## 如何搭建 Docker 可视化管理?
 
