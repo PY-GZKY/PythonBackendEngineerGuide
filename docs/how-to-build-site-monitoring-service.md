@@ -3,7 +3,7 @@
 - https://github.com/louislam/uptime-kuma
 - https://github.com/louislam/uptime-kuma/wiki
 
-## 如何使用 Upptime Kuma 搭建站点监控服务
+## 如何使用 Upptime Kuma 搭建站点监控服务?
 
 Uptime Kuma 是一款易于使用的自托管监控工具：
 
@@ -13,13 +13,13 @@ Uptime Kuma 是一款易于使用的自托管监控工具：
 - 多语言，多个状态页面，证书信息
 
 
-### 如何使用 Docker 启动 Upptime Kuma 服务
+### 如何使用 Docker 启动 Upptime Kuma 服务?
 
 ```shell
 docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data --name uptime-kuma louislam/uptime-kuma:1
 ```
 
-> 启动后浏览到 http://localhost:3001 预览即可
+> 启动后浏览到 http://localhost:3001 预览即可。
 
 更新到最新的docker发布版本：
 
@@ -35,9 +35,9 @@ docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data --name upti
 
 ---
 
-## 如何使用 Prometheus + Grafana 进行可视化监控
+## 如何使用 Prometheus + Grafana 进行可视化监控?
 
-### 利用 Docker 启动 Prometheus + Grafana 服务
+### 如何使用 Docker 启动 Prometheus 服务?
 
 首先需要构造一个 `docker-compose.yml` 文件，内容如下：
 
@@ -126,7 +126,7 @@ services:
     - Node Exporter：用于收集主机的监控数据，如 CPU、内存、磁盘等，映射到本地的 9100 端口
     - MySQL Exporter：用于收集 MySQL 数据库的监控数据，如连接数、查询数、响应时间等，映射到本地的 9104 端口，my.cnf 是 MySQL 的配置文件
 
-### 开始编写 prometheus.yml 配置文件：
+### 编写 prometheus.yml 配置文件
 
 ```yaml
 global:
