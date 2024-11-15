@@ -179,13 +179,13 @@ nginx: configuration file /usr/local/nginx/conf/nginx.conf test is successful
 
 假设我们的工程目录 `code`，请在 `code` 下:
 
-1. 生成 `requirements.txt` 文件
+- 生成 `requirements.txt` 文件
 
 ```shell
 pip freeze > requirements.txt
 ```
 
-2. `Nginx` 配置文件
+- `Nginx` 配置文件
 
 在 `code/config/nginx` 下新建 `web_app.conf` 文件并写入以下配置
 
@@ -210,7 +210,7 @@ server {
 }
 ```
 
-3. 构建 `Dockerfile` 文件
+- 构建 `Dockerfile` 文件
 
 ```shell
 # 基于 Py3.8 构建
