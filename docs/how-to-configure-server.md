@@ -11,12 +11,6 @@
 
 同样，如果预算允许，可以考虑选择更高性能的 CPU 和更大容量的 SSD。
 
-## ssh连接服务器
-
-```shell
-ssh wutong@hostname
-```
-
 ## 如何进行系统换源?
 
 如果你的服务器来自 阿里云或者腾讯云，那自然是不用换源了。这些运营商会帮你配好。
@@ -66,7 +60,9 @@ bash Miniconda3-py310_23.3.1-0-Linux-x86_64.sh -b
 conda --version
 ```
 
-## 配置zsh
+## 如何配置zsh?
+
+zsh 是一个功能强大的 shell，它是 bash 的一个扩展，提供了更多的功能和更好的用户体验。
 
 ```shell
 # 配置zsh
@@ -76,6 +72,8 @@ sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O 
 ~/miniconda3/bin/conda init bash
 ~/miniconda3/bin/conda init zsh
 ```
+
+这是因为 zsh 会覆盖 bash 的环境变量，所以需要重新初始化一下。
 
 ## 如何设置免密ssh登录服务器?
 
