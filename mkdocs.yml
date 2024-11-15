@@ -74,7 +74,7 @@ nav:
       - 首页: README.md
   - 服务器配置:
       - 如何搭建一台后端服务器: how-to-configure-server.md
-      - 如何选择和搭建数据库服务: how-to-quickly-deploy-database.md
+      - 如何选择数据库服务: how-to-quickly-deploy-database.md
   - Docker部署服务:
       - 如何使用 Docker 部署服务: how-to-deploy-using-docker.md
   - FastAPI框架:
