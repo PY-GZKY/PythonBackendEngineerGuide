@@ -104,7 +104,6 @@ Portainer 可以作为一个容器运行在任何安装了Docker的机器上。�
 1. **运行 Portainer 容器**
 
    使用以下命令来启动Portainer容器：
-
    ```shell
     docker run -d -p 9000:9000 --restart=always -v /var/run/docker.sock:/var/run/docker.sock --name portainer portainer/portainer
    ```
