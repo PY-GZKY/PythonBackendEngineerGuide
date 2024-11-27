@@ -92,6 +92,33 @@ uvicorn main:app --workers 4
 
 ## 如何优化数据库性能？
 
+### 如何设置  MySQL 的 wait_timeout?
+
+`wait_timeout` 是 MySQL 中的一个系统变量，用于设置客户端连接的超时时间，即连接在空闲一段时间后会自动断开。
+
+这个变量的默认值是 `28800` 秒（8 小时），也就是说，如果一个客户端连接在 8 小时内没有任何活动，那么 MySQL 会自动断开这个连接。
+
+但是有时候我们不希望数据库在闲置 8 小时之后才断开连接，如果我的后台服务并发性较高，那么 8 小时的时间可能会导致数据库连接数过多，从而影响数据库的性能。
+
+在 MySQL 中，可以通过以下方式设置 `wait_timeout` 变量：
+
+```shell
+SHOW SESSION VARIABLES LIKE 'wait_timeout';
+```
+
+然后，你需要找到启动 MySQL 的配置文件，通常是 `my.cnf` 或 `my.ini`，在这个文件中修改或添加以下配置：
+
+```shell
+[mysqld]
+wait_timeout = 14400
+```
+
+这里的 `14400` 是你希望设置的超时时间，单位是秒。修改完配置文件后，重启 MySQL 服务，新的 `wait_timeout` 设置就会生效。
+
+设置 `wait_timeout` 的目的是为了优化数据库的性能和资源利用，避免因为连接数过多而导致数据库性能下降。
+
+设置过小的 `wait_timeout` 可能会导致一些问题，比如客户端连接频繁断开、连接池无法正常工作等，因此需要根据实际情况来合理设置这个值。
+
 ### 为什么要创建数据库索引？
 
 数据库索引可以提高查询的效率，减少数据库系统的负载。当我们查询数据库时，数据库系统会首先检查索引，然后根据索引的信息来定位数据，从而减少查询的时间。
@@ -129,6 +156,7 @@ CREATE INDEX idx_username ON users (username);
 #### 为用户表的`username`和`email`列创建一个组合索引
 
 如果我们想要查询 username 和 email 列的组合信息，比如查询用户名为`test123`且邮箱为`test123@qq.com`的用户信息，我们可以创建一个组合索引：
+
 ```sql
 CREATE INDEX idx_username_email ON users (username, email);
 ```
@@ -141,6 +169,7 @@ CREATE INDEX idx_username_email ON users (username, email);
 #### 创建全文索引
 
 还有一种情况是模糊查询，具体的sql执行过程可能是：
+
 ```text
 SELECT * FROM users WHERE username LIKE '%Love%';
 ``` 
@@ -148,13 +177,18 @@ SELECT * FROM users WHERE username LIKE '%Love%';
 （为了演示用了 * 号，生产环境不要使用 * 号）
 
 为了提高模糊查询的效率，我们可以为`username`列创建全文索引：
+
 ```sql
-CREATE FULLTEXT INDEX idx_users ON users (username);
+CREATE
+FULLTEXT INDEX idx_users ON users (username);
 ```
 
 如何使用全文索引：
+
 ```sql
-SELECT * FROM users WHERE MATCH(username) AGAINST('Love');
+SELECT *
+FROM users
+WHERE MATCH (username) AGAINST('Love');
 ```
 
 - `MATCH` 关键字用于指定要匹配的列
@@ -162,29 +196,4 @@ SELECT * FROM users WHERE MATCH(username) AGAINST('Love');
 
 全文索引可以提高模糊查询的效率，但是需要注意的是，全文索引只能用于 MyISAM 和 InnoDB 引擎，且只能用于 CHAR、VARCHAR、TEXT 类型的列。
 
-### 如何设置  MySQL 的 wait_timeout?
 
-`wait_timeout` 是 MySQL 中的一个系统变量，用于设置客户端连接的超时时间，即连接在空闲一段时间后会自动断开。
-
-这个变量的默认值是 `28800` 秒（8 小时），也就是说，如果一个客户端连接在 8 小时内没有任何活动，那么 MySQL 会自动断开这个连接。
-
-但是有时候我们不希望数据库在闲置 8 小时之后才断开连接，如果我的后台服务并发性较高，那么 8 小时的时间可能会导致数据库连接数过多，从而影响数据库的性能。
-
-在 MySQL 中，可以通过以下方式设置 `wait_timeout` 变量：
-
-```shell
-SHOW SESSION VARIABLES LIKE 'wait_timeout';
-```
-
-然后，你需要找到启动 MySQL 的配置文件，通常是 `my.cnf` 或 `my.ini`，在这个文件中修改或添加以下配置：
-
-```shell
-[mysqld]
-wait_timeout = 14400
-```
-
-这里的 `14400` 是你希望设置的超时时间，单位是秒。修改完配置文件后，重启 MySQL 服务，新的 `wait_timeout` 设置就会生效。
-
-设置 `wait_timeout` 的目的是为了优化数据库的性能和资源利用，避免因为连接数过多而导致数据库性能下降。
-
-设置过小的 `wait_timeout` 可能会导致一些问题，比如客户端连接频繁断开、连接池无法正常工作等，因此需要根据实际情况来合理设置这个值。
