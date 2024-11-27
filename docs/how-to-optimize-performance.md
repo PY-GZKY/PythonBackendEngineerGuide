@@ -145,7 +145,7 @@ CREATE TABLE users
 我们假设这个表有100万条记录，我们要查询用户名为`test123`的用户信息，如果没有索引，数据库系统会逐条扫描表中的记录，
 直到找到用户名为`admin`的记录。这样的查询效率非常低。
 
-#### 为用户表的`username`列创建一个索引
+#### 创建单列索引
 
 ```sql
 CREATE INDEX idx_username ON users (username);
@@ -153,7 +153,7 @@ CREATE INDEX idx_username ON users (username);
 
 上面的语句创建了一个名为`idx_username`的索引，该索引是对`users`表的`username`列进行索引，这是一个单列索引。
 
-#### 为用户表的`username`和`email`列创建一个组合索引
+#### 创建组合索引
 
 如果我们想要查询 username 和 email 列的组合信息，比如查询用户名为`test123`且邮箱为`test123@qq.com`的用户信息，我们可以创建一个组合索引：
 
