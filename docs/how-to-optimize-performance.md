@@ -92,6 +92,14 @@ uvicorn main:app --workers 4
 
 ## 如何优化数据库性能？
 
+### 如何查看正在连接的数据库用户？
+
+在 MySQL 中，可以通过以下命令查看当前正在连接的数据库用户：
+
+```shell
+SHOW FULL PROCESSLIST;
+```
+
 ### 如何设置  MySQL 的 wait_timeout?
 
 `wait_timeout` 是 MySQL 中的一个系统变量，用于设置客户端连接的超时时间，即连接在空闲一段时间后会自动断开。
