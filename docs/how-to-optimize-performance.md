@@ -90,7 +90,7 @@ uvicorn main:app --workers 4
 
 反观单进程，对于 FastAPI这种异步web框架来说，它只需要占用一份内存空间，在线程中的任务开销也比进程间的开销要小得多，因此在一些简单的任务中，单进程可能会比多进程更快。
 
-## 如何在生产环境中优化数据库性能？
+## 如何优化数据库性能？
 
 ### 为什么要创建数据库索引？
 
@@ -118,7 +118,7 @@ CREATE TABLE users
 我们假设这个表有100万条记录，我们要查询用户名为`test123`的用户信息，如果没有索引，数据库系统会逐条扫描表中的记录，
 直到找到用户名为`admin`的记录。这样的查询效率非常低。
 
-下面我们为用户表的`username`列创建一个索引：
+#### 为用户表的`username`列创建一个索引
 
 ```sql
 CREATE INDEX idx_username ON users (username);
@@ -126,8 +126,9 @@ CREATE INDEX idx_username ON users (username);
 
 上面的语句创建了一个名为`idx_username`的索引，该索引是对`users`表的`username`列进行索引，这是一个单列索引。
 
-如果我们想要查询 username 和 email 列的组合信息，比如查询用户名为`test123`且邮箱为`test123@qq.com`的用户信息，我们可以创建一个组合索引：
+#### 为用户表的`username`和`email`列创建一个组合索引
 
+如果我们想要查询 username 和 email 列的组合信息，比如查询用户名为`test123`且邮箱为`test123@qq.com`的用户信息，我们可以创建一个组合索引：
 ```sql
 CREATE INDEX idx_username_email ON users (username, email);
 ```
@@ -137,7 +138,29 @@ CREATE INDEX idx_username_email ON users (username, email);
 - 单列索引只能用于查询单列信息，而多列索引可以用于查询多列信息
 - 多列索引的查询效率高于单列索引，因为多列索引可以减少数据库系统的扫描次数
 
-...
+#### 创建全文索引
+
+还有一种情况是模糊查询，具体的sql执行过程可能是：
+```text
+SELECT * FROM users WHERE username LIKE '%Love%';
+``` 
+
+（为了演示用了 * 号，生产环境不要使用 * 号）
+
+为了提高模糊查询的效率，我们可以为`username`列创建全文索引：
+```sql
+CREATE FULLTEXT INDEX idx_users ON users (username);
+```
+
+如何使用全文索引：
+```sql
+SELECT * FROM users WHERE MATCH(username) AGAINST('Love');
+```
+
+- `MATCH` 关键字用于指定要匹配的列
+- `AGAINST` 关键字用于指定要匹配的字符串
+
+全文索引可以提高模糊查询的效率，但是需要注意的是，全文索引只能用于 MyISAM 和 InnoDB 引擎，且只能用于 CHAR、VARCHAR、TEXT 类型的列。
 
 ### 如何设置  MySQL 的 wait_timeout?
 
