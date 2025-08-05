@@ -69,6 +69,12 @@ docker run -d --name mongodb \
 -p 27017:27017 mongo:4.4.6
 ```
 
+## SqlServer部署
+
+```
+docker run -e "ACCEPT_EULA=Y" -e "MSSQL_SA_PASSWORD=123456" -p 1433:1433 -v /home/server/mssql/data:/var/opt/mssql --cap-add SYS_PTRACE mcr.microsoft.com/mssql/server:2022-latest
+```
+
 这条命令会以守护进程方式运行Redis容器，使用自定义的配置文件和数据目录，并将容器的6379端口映射到宿主机的6379端口。
 
 ## 如何删除或清理 Docker 容器?
