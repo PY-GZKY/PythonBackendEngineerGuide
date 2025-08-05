@@ -85,6 +85,28 @@ docker images -q --filter "dangling=true" | xargs docker rmi
 
 Docker的维护命令可以帮助你保持环境的清洁和高效。记得在实际部署前，根据自己的需要调整命令中的参数，如镜像名、容器名、端口映射等。
 
+
+## 安装 Docker Compose
+
+建议安装 docker 自带的 Compose 工具，它比基于 Python（pip）安装的 docker-compose 功能更全，版本更新更及时。
+
+安装最新版本：
+```
+sudo curl -L "https://github.com/docker/compose/releases/download/latest/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+```
+
+使用下列命令赋予二进制文件可执行权限：
+```
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+运行下列命令检查安装的 Docker Compose 版本：
+```
+sudo docker-compose version
+```
+
+注意：最新版本的 Docker Compose 已经不再需要在 yaml 文件中指定版本号，可移除。
+
 ## 如何搭建 Docker 可视化管理?
 
 Portainer 是一款开源的轻量级管理工具，旨在帮助用户通过Web用户界面轻松管理Docker或Kubernetes环境。它的直观界面使得即使是Docker和Kubernetes的新手也能快速上手，同时也为高级用户提供了强大的功能。下面是如何安装和使用Portainer进行Docker环境管理的详细指南。
